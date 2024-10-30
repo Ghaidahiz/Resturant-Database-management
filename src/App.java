@@ -19,7 +19,7 @@ public class App {
             System.out.println("db con good");
         } 
         catch (ClassNotFoundException ex) {
-            System.out.println("ERRORRRR! Driver class not found.");
+            System.out.println("ERRORRRR! Driver class not found: " + ex.getMessage());
         }
         catch (SQLException exception) {
             System.out.println("ERRORRRR SQLLL! " + exception.getMessage());
