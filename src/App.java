@@ -13,18 +13,18 @@ public class App {
             Class.forName("com.mysql.cj.jdbc.Driver");
             
             // Establish connection
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Database381", "root", "gH123456");
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Database381", "root", "gH123456");//this connects us to the database
+            Statement stmt = con.createStatement();//this creates a statement so we can send it to the database
+            ResultSet rs = stmt.executeQuery( //we save the results that are made by the query is rs
                 """
                 SELECT * 
                 FROM EMPLOYEE 
                 WHERE Bcode='Riyadh-01'
                 """);
-            while(rs.next()){
-                System.out.println(rs.getString(1));
-                System.out.println(rs.getString(2));
-                System.out.println(rs.getString(3));
+            while(rs.next()){//this reads the results and prints it
+                System.out.println(rs.getString(1));//emp id 
+                System.out.println(rs.getString(2));//emp branch
+                System.out.println(rs.getString(3));// emp name
             }
             System.out.println("YAAAAAAAAYYYY");
         } 
