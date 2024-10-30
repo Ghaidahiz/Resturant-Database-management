@@ -1,18 +1,16 @@
-## Getting Started
+# Restaurant Database Management System
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+This project for the "Fundamentals of Database Systems" course (CSC380) covers the creation and usage of a database, connecting it to a Java application, and creating a GUI for managing restaurant information.
 
-## Folder Structure
+## Technologies Used:
+- MySQL
+- JDBC for database connection
+- GUI: Swing
 
-The workspace contains two folders by default, where:
+## Project Team
+- Ghaida Alzaidan
+- Almaha Alaiban
+- Eman Ameen
+- Renad Aljarallah
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Under the supervision of: Prof. Sultanah Alotaibi
