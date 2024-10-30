@@ -15,7 +15,17 @@ public class App {
             // Establish connection
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Database381", "root", "gH123456");
             Statement stmt = con.createStatement();
-            
+            ResultSet rs = stmt.executeQuery(
+                """
+                SELECT * 
+                FROM EMPLOYEE 
+                WHERE Bcode='Riyadh-01'
+                """);
+            while(rs.next()){
+                System.out.println(rs.getString(1));
+                System.out.println(rs.getString(2));
+                System.out.println(rs.getString(3));
+            }
             System.out.println("YAAAAAAAAYYYY");
         } 
         catch (ClassNotFoundException ex) {
