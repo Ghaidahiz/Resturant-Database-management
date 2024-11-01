@@ -1,5 +1,8 @@
 import java.sql.*;
+import io.github.cdimascio.dotenv.Dotenv;
 
+        
+        
 public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Hello, World!");
@@ -12,19 +15,21 @@ public class App {
             // Use the correct driver class name for MySQL Connector/J 8.x
             Class.forName("com.mysql.cj.jdbc.Driver");
     
-            // Get the database password from the environment variable (to protect the database)
-            String dbPassword = System.getenv("DB_PASSWORD");
-            
+            // Get the database info from the environment variable (to protect the database)
+            Dotenv dotenv = Dotenv.load(); // Load the .env file
+            String dbPassword = dotenv.get("DB_PASSWORD"); // Retrieve the password
+            String dbEndPoint = "jdbc:mysql://" + dotenv.get("DB_ENDPOINT") + ":3306/WISTERDATABASE";
+            String dbAdmin = dotenv.get("DB_ADMIN");
+
             // Establish connection using the environment variable
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Database381", "root", dbPassword);
+            Connection con = DriverManager.getConnection(dbEndPoint , dbAdmin, dbPassword);//all -> variables in env
             System.out.println("db connection successful");
-            Class.forName("com.mysql.cj.jdbc.Driver");
             
             Statement stmt = con.createStatement();//this creates a statement so we can send it to the database
             ResultSet rs = stmt.executeQuery( //we save the results that are made by the query is rs
                 """
                 SELECT * 
-                FROM EMPLOYEE 
+                FROM EMPLOYEE
                 WHERE Bcode='Riyadh-01'
                 """);
             while(rs.next()){//this reads the results and prints it
@@ -35,7 +40,7 @@ public class App {
     
         } 
         catch (ClassNotFoundException ex) {
-            System.out.println("ERRORRRR! Driver class not found.");
+            System.out.println("ERRORRRR! Driver class not found."+ ex.getMessage());
         }
         catch (SQLException exception) {
             System.out.println("ERRORRRR SQLLL! " + exception.getMessage());
