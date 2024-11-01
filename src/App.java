@@ -5,14 +5,13 @@ import io.github.cdimascio.dotenv.Dotenv;
         
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
         App app = new App();
         app.createConnection();
 
     }
     void createConnection() {
         try {
-            // Use the correct driver class name for MySQL Connector/J 8.x
+            // Use the driver class for MySQL Connector
             Class.forName("com.mysql.cj.jdbc.Driver");
     
             // Get the database info from the environment variable (to protect the database)
