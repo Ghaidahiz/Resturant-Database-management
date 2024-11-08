@@ -10,6 +10,7 @@ public class App {
 
         // this code below is just an example!!!!!
 
+
         Statement stmt = con.createStatement();// this creates a statement so we can send it to the database
         ResultSet rs = stmt.executeQuery( // we save the results that are made by the query is rs
                 " SELECT * FROM EMPLOYEE WHERE Bcode='Riyadh-01' ");
@@ -18,6 +19,8 @@ public class App {
             System.out.println(rs.getString(2));// emp branch
             System.out.println(rs.getString(3));// emp name
         }
+        
+        // GUI IS HERE
 
     }
 
@@ -35,6 +38,8 @@ public class App {
             // Establish connection using the environment variable
             con = DriverManager.getConnection(dbEndPoint, dbAdmin, dbPassword);// all -> variables in env
             System.out.println("db connection successful");
+
+            
 
         } catch (ClassNotFoundException ex) {
             System.out.println("ERRORRRR! Driver class not found." + ex.getMessage());
