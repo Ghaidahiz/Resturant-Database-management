@@ -8,7 +8,7 @@ public class App {
         App app = new App();
         app.createConnection(); // this creates the connection with the data base
 
-        // this code below is just an example!!!!!
+        // this code below is just an example!!!!!!!!!!
 
 
         Statement stmt = con.createStatement();// this creates a statement so we can send it to the database
