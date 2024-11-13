@@ -13,13 +13,13 @@ public class App {
     public static void main(String[] args) throws Exception {
         App app = new App();
         app.createConnection(); // this creates the connection with the data base
-
+        JFrame managerRemove= new JFrame(),
+        managerUpdare= new JFrame();
 
         {   //  ************ MANAGER REMOVE VEIW *************
-             JFrame managerRemove= new JFrame(); 
-       managerRemove.setTitle("REMOVE");
+        managerRemove.setTitle("REMOVE");
 		managerRemove.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		managerRemove.setBounds(100, 100, 450, 300);
+		managerRemove.setBounds(100, 100, 550, 400);
 		managerRemove.getContentPane().setLayout(new BorderLayout());
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -191,6 +191,121 @@ public class App {
       managerRemove.setVisible(true); }  // END OF MANAGER REMOVE VEIW
 
 
+
+        
+      {  //  ************ MANAGER UPDATE VEIW *************
+        managerUpdare.setTitle("UPDATE");
+      managerUpdare.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      managerUpdare.setBounds(100, 100, 550, 400);
+      managerUpdare.getContentPane().setLayout(new BorderLayout());
+
+		JTabbedPane tabbedPane = new JTabbedPane();
+
+		JPanel Item = new JPanel();
+		Item.setLayout(null);
+		 
+		 		JPanel Employee = new JPanel();
+		 		Employee.setLayout(null);
+		 		tabbedPane.addTab("Employee",Employee);
+		 		
+		 		JLabel lblNewLabel = new JLabel("Enter ID of the employee you want to update his info:");
+		 		lblNewLabel.setBounds(10, 51, 312, 31);
+		 		Employee.add(lblNewLabel);
+		 		
+		 		JComboBox comboBox_1 = new JComboBox();
+		 		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Salary", "Emp_Phone", "Role"}));
+		 		comboBox_1.setBounds(332, 98, 96, 22);
+		 		Employee.add(comboBox_1);
+		 		
+		 		JLabel lblNewLabel_1 = new JLabel("select which info you want to update:");
+		 		lblNewLabel_1.setBounds(87, 93, 235, 33);
+		 		Employee.add(lblNewLabel_1);
+		 		
+		 		JTextField textField = new JTextField();
+		 		textField.setBounds(332, 141, 96, 22);
+		 		Employee.add(textField);
+		 		textField.setColumns(10);
+		 		
+		 		JLabel lblNewLabel_2 = new JLabel("new value:");
+		 		lblNewLabel_2.setBounds(225, 137, 75, 31);
+		 		Employee.add(lblNewLabel_2);
+		 		
+		 		JButton btnNewButton = new JButton("UPDATE");
+		 		btnNewButton.setBounds(332, 201, 96, 23);
+		 		Employee.add(btnNewButton);
+		 		
+		 		JTextField textField_6 = new JTextField();
+		 		textField_6.setBounds(332, 56, 96, 20);
+		 		Employee.add(textField_6);
+		 		textField_6.setColumns(10);
+		 
+		 		JPanel Branch = new JPanel();
+		 		Branch.setLayout(null);
+		 		tabbedPane.addTab("Branch",Branch);
+		 		
+		 		JLabel lblNewLabel_3 = new JLabel("enter branch code of the branch you want to update  its working time:\r\n");
+		 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.LEFT);
+		 		lblNewLabel_3.setBounds(10, 57, 405, 23);
+		 		Branch.add(lblNewLabel_3);
+		 		
+		 		JTextField textField_1 = new JTextField();
+		 		textField_1.setBounds(425, 58, 96, 20);
+		 		Branch.add(textField_1);
+		 		textField_1.setColumns(10);
+		 		
+		 		JLabel lblNewLabel_5 = new JLabel("the new time:");
+		 		lblNewLabel_5.setBounds(10, 80, 96, 20);
+		 		Branch.add(lblNewLabel_5);
+		 		
+		 		JButton btnNewButton_1 = new JButton("UPDATE");
+		 		btnNewButton_1.setBounds(399, 287, 96, 23);
+		 		Branch.add(btnNewButton_1);
+		 		
+		 		JComboBox<String> comboBox = new JComboBox<String>();
+		 		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"00", "01", "02", "03", "04", "05", "06", "07", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"}));
+		 		comboBox.setBounds(135, 103, 42, 22);
+		 		Branch.add(comboBox);
+		 		
+		 		JComboBox<String> comboBox_2 = new JComboBox<String>();
+		 		comboBox_2.setModel(new DefaultComboBoxModel<String>(new String[] {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"}));
+		 		comboBox_2.setBounds(135, 136, 42, 22);
+		 		Branch.add(comboBox_2);
+		 		
+		 		JLabel lblNewLabel_4 = new JLabel("Hour");
+		 		lblNewLabel_4.setBounds(86, 107, 49, 14);
+		 		Branch.add(lblNewLabel_4);
+		 		
+		 		JLabel lblNewLabel_6 = new JLabel("Minutes ");
+		 		lblNewLabel_6.setBounds(86, 140, 49, 14);
+		 		Branch.add(lblNewLabel_6);
+		 tabbedPane.addTab("Item",Item);
+		 
+		 JLabel lblNewLabel_9 = new JLabel("enter item name that yuo want to update its price:");
+		 lblNewLabel_9.setBounds(10, 53, 303, 20);
+		 Item.add(lblNewLabel_9);
+		 
+		 JTextField textField_4 = new JTextField();
+		 textField_4.setBounds(312, 53, 96, 20);
+		 Item.add(textField_4);
+		 textField_4.setColumns(10);
+		 
+		 JLabel lblNewLabel_10 = new JLabel("new price:");
+		 lblNewLabel_10.setBounds(227, 96, 62, 14);
+		 Item.add(lblNewLabel_10);
+		 
+		 JTextField textField_5 = new JTextField();
+		 textField_5.setBounds(312, 93, 96, 20);
+		 Item.add(textField_5);
+		 textField_5.setColumns(10);
+		 
+		 JButton btnNewButton_2 = new JButton("UPDATE");
+		 btnNewButton_2.setBounds(312, 140, 96, 23);
+		 Item.add(btnNewButton_2);
+
+         managerUpdare.getContentPane().add(tabbedPane);
+         managerUpdare.setVisible(true);
+
+      } //END OF MANAGER UPDATE VEIW
 
 
 
