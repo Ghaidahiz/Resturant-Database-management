@@ -14,12 +14,13 @@ public class App {
         App app = new App();
         app.createConnection(); // this creates the connection with the data base
 
-        // this code below is just an example!!!!!!!!!!
-        JFrame frame= new JFrame();
-       frame.setTitle("REMOVE");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 450, 300);
-		frame.getContentPane().setLayout(new BorderLayout());
+
+        {   //  ************ MANAGER REMOVE VEIW *************
+             JFrame managerRemove= new JFrame(); 
+       managerRemove.setTitle("REMOVE");
+		managerRemove.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		managerRemove.setBounds(100, 100, 450, 300);
+		managerRemove.getContentPane().setLayout(new BorderLayout());
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -185,9 +186,9 @@ public class App {
         tabbedPane.addTab("Item",Item);
 
 
-      frame.getContentPane().add(tabbedPane);
+      managerRemove.getContentPane().add(tabbedPane);
 
-      frame.setVisible(true);
+      managerRemove.setVisible(true); }  // END OF MANAGER REMOVE VEIW
 
 
 
