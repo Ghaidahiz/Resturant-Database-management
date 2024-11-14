@@ -2,27 +2,30 @@
 import java.sql.*;
 import io.github.cdimascio.dotenv.Dotenv;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.Popup;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import java.awt.Image;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,6 +34,8 @@ public class Wister extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	static Connection con;
+	static int numOfAffectedRow;
 
 	/**
 	 * Launch the application.
@@ -113,25 +118,195 @@ public class Wister extends JFrame {
 
 						managerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-						JButton managerSearch = new JButton("Search"); //TODO: EMAN
+						JButton managerSearch = new JButton("Search"); // TODO: EMAN
 						managerSearch.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
-						});	
+						});
 
-						JButton managerUpdate = new JButton("Update");//TODO: EMAN
+						JButton managerUpdate = new JButton("Update");// TODO: EMAN
 						managerUpdate.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
 						});
 
-						JButton managerRemove = new JButton("Remove");//TODO: EMAN
-						managerRemove.addActionListener(new ActionListener() {
+						JButton bmanagerRemove = new JButton("Remove");// TODO: EMAN
+						bmanagerRemove.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
+								JFrame managerRemove = new JFrame();
+								managerRemove.setTitle("REMOVE");
+								managerRemove.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+								managerRemove.setBounds(100, 100, 550, 400);
+								managerRemove.getContentPane().setLayout(new BorderLayout());
+
+								JTabbedPane tabbedPane = new JTabbedPane();
+
+								// Create panels to add to each tab
+								JPanel Employee = new JPanel();
+								Employee.setLayout(null);
+
+								JPanel Branch = new JPanel();
+								Branch.setLayout(null);
+
+								JPanel Item = new JPanel();
+								Item.setLayout(null);
+								JLabel label_1 = new JLabel("enter name of the item you want to remove:   ");
+								label_1.setBounds(10, 59, 273, 20);
+								Item.add(label_1);
+
+								// Add panels as tabs to the JTabbedPane
+								JLabel labal_2 = new JLabel("remove employees by thier:");
+								labal_2.setHorizontalAlignment(SwingConstants.CENTER);
+								labal_2.setBounds(10, 26, 181, 32);
+								Employee.add(labal_2);
+
+								// set up tab Employee (remove) until line 93
+								JComboBox<String> comboBox = new JComboBox<String>();
+								comboBox.setModel(
+										new DefaultComboBoxModel<String >(new String[] { " Employee_ID", "Emp_Name", "Gender",
+												"Role", "Salary" }));
+								comboBox.setBounds(53, 69, 96, 20);
+								Employee.add(comboBox);
+
+								JTextField textField = new JTextField();
+								textField.setBounds(229, 69, 96, 20);
+								Employee.add(textField);
+								textField.setColumns(10);
+
+								JLabel lblNewLabel = new JLabel("enter a value to remove all");
+								lblNewLabel.setBounds(213, 23, 171, 20);
+								Employee.add(lblNewLabel);
+
+								JLabel lblNewLabel_1 = new JLabel("employees that match:");
+								lblNewLabel_1.setBounds(229, 45, 138, 20);
+								Employee.add(lblNewLabel_1);
+
+								JButton button = new JButton("Remove");
+								button.setBounds(314, 173, 89, 23);
+								Employee.add(button);
+
+								button.addActionListener(new ActionListener() {
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										try {
+											Statement stmt = con.createStatement();
+											// ResultSet sr;
+											if (comboBox.getSelectedItem().equals("Emp_Name")
+													|| comboBox.getSelectedItem().equals("Gender")
+													|| comboBox.getSelectedItem().equals("Role"))
+												numOfAffectedRow = stmt.executeUpdate(
+														"DELETE FROM EMPLOYEE " +
+																"WHERE " + comboBox.getSelectedItem() + "=" + "\'"
+																+ textField.getText()
+																+ "\'");
+
+											else {
+												int num = Integer.parseInt(textField.getText());
+												numOfAffectedRow = stmt.executeUpdate(
+														"DELETE FROM EMPLOYEE " +
+																"WHERE " + comboBox.getSelectedItem() + "=" + num);
+											}
+
+											if (numOfAffectedRow == 0)
+												JOptionPane.showMessageDialog(null,
+														"There is no Empolyee with the received value");
+
+										} catch (NumberFormatException E) {
+											JOptionPane.showMessageDialog(null, "please enter a number", "Input Error",
+													JOptionPane.WARNING_MESSAGE);
+										} catch (SQLException E) {
+											System.out.println(E.getMessage());
+										}
+									}
+								});
+
+								JLabel lblNewLabel_2 = new JLabel(
+										"enter the code of the Branch \r\nyou want to remove:");
+								lblNewLabel_2.setBounds(10, 36, 257, 31);
+								Branch.add(lblNewLabel_2);
+
+								JTextField textField_1 = new JTextField();
+								textField_1.setBounds(277, 41, 96, 20);
+								Branch.add(textField_1);
+								textField_1.setColumns(10);
+
+								JButton Button_1 = new JButton("Remove");
+								Button_1.setBounds(277, 72, 96, 23);
+								Branch.add(Button_1);
+
+								Button_1.addActionListener(new ActionListener() {
+
+									public void actionPerformed(ActionEvent e) {
+										try {
+											int code = Integer.parseInt(textField_1.getText());
+
+											Statement stmt = con.createStatement();
+											numOfAffectedRow = stmt.executeUpdate(
+													"DELETE FROM BRANCH " +
+															"WHERE Branch_code=" + code
+
+											);
+
+											if (numOfAffectedRow == 0)
+												JOptionPane.showMessageDialog(null,
+														"There is no Branch with the recived Branch_code");
+
+										} catch (NumberFormatException ex) {
+											JOptionPane.showMessageDialog(null, "please enter a number", "Input Error",
+													JOptionPane.WARNING_MESSAGE);
+
+										}
+
+										catch (SQLException ex) {
+											System.out.println(ex.getMessage());
+
+										}
+
+									}
+
+								});
+
+								JTextArea txtrEman = new JTextArea();
+								txtrEman.setText("eman\r\nameen\r\nf\r\nf\r\nf\r\nf\r\nd\r\nd\r\nd\r\nd\r\n");
+								txtrEman.setBounds(10, 130, 411, 94);
+								Branch.add(txtrEman);
+
+								JTextField textField_2 = new JTextField();
+								textField_2.setBounds(293, 59, 96, 20);
+								Item.add(textField_2);
+								textField_2.setColumns(10);
+
+								JButton btnNewButton = new JButton("Remove");
+								btnNewButton.setBounds(290, 96, 99, 23);
+								Item.add(btnNewButton);
+
+								btnNewButton.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent ev) {
+										try {
+											Statement stmt = con.createStatement();
+											numOfAffectedRow = stmt.executeUpdate(
+													"DELETE FROM ITEM " +
+															"WHERE Item_Name= \'" + textField_2.getText() + "\'");
+											if (numOfAffectedRow == 0)
+												JOptionPane.showMessageDialog(null,
+														"There is no item with the received name!");
+										} catch (SQLException e) {
+											System.out.println(e.getMessage());
+										}
+									}
+								});
+
+								tabbedPane.addTab("Employee", Employee);
+								tabbedPane.addTab("Branch", Branch);
+								tabbedPane.addTab("Item", Item);
+
+								managerRemove.getContentPane().add(tabbedPane);
+
+								managerRemove.setVisible(true);
 							}
 						});
 
-						JButton managerAdd = new JButton("Add"); //TODO: Ghaida
+						JButton managerAdd = new JButton("Add"); // TODO: Ghaida
 						managerAdd.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
@@ -147,7 +322,8 @@ public class Wister extends JFrame {
 														.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 																.addComponent(managerAdd, GroupLayout.PREFERRED_SIZE,
 																		149, GroupLayout.PREFERRED_SIZE)
-																.addComponent(managerRemove, GroupLayout.PREFERRED_SIZE,
+																.addComponent(bmanagerRemove,
+																		GroupLayout.PREFERRED_SIZE,
 																		149, GroupLayout.PREFERRED_SIZE)
 																.addComponent(managerUpdate, GroupLayout.PREFERRED_SIZE,
 																		149, GroupLayout.PREFERRED_SIZE)
@@ -162,7 +338,7 @@ public class Wister extends JFrame {
 										.addComponent(managerAdd, GroupLayout.PREFERRED_SIZE, 53,
 												GroupLayout.PREFERRED_SIZE)
 										.addGap(6)
-										.addComponent(managerRemove, GroupLayout.PREFERRED_SIZE, 53,
+										.addComponent(bmanagerRemove, GroupLayout.PREFERRED_SIZE, 53,
 												GroupLayout.PREFERRED_SIZE)
 										.addGap(6)
 										.addComponent(managerUpdate, GroupLayout.PREFERRED_SIZE, 53,
@@ -172,31 +348,31 @@ public class Wister extends JFrame {
 										.addGap(15)));
 						managerFrame.getContentPane().setLayout(groupLayout);
 						managerFrame.setVisible(true);
-					} else if (name.equalsIgnoreCase("cashierUser")) {  // if the user is a cashier open cashier view
+					} else if (name.equalsIgnoreCase("cashierUser")) { // if the user is a cashier open cashier view
 						JFrame cashierFrame = new JFrame();
 						cashierFrame.setBounds(450, 220, 450, 334);
 
 						cashierFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-						JButton cashierSearch = new JButton("Search"); //TODO: RENAD
+						JButton cashierSearch = new JButton("Search"); // TODO: RENAD
 						cashierSearch.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
-						});	
+						});
 
-						JButton cashierUpdate = new JButton("Update");//TODO: RENAD
+						JButton cashierUpdate = new JButton("Update");// TODO: RENAD
 						cashierUpdate.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
 						});
 
-						JButton cashierRemove = new JButton("Remove");//TODO: RENAD
+						JButton cashierRemove = new JButton("Remove");// TODO: RENAD
 						cashierRemove.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
 						});
 
-						JButton cashierAdd = new JButton("Add"); //TODO: Ghaida
+						JButton cashierAdd = new JButton("Add"); // TODO: Ghaida
 						cashierAdd.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
