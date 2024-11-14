@@ -1,11 +1,8 @@
 import java.sql.*;
-
 import io.github.cdimascio.dotenv.Dotenv;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -18,11 +15,8 @@ import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-
 import com.mysql.cj.xdevapi.Statement;
-
 import java.awt.Image;
-
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -30,7 +24,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -55,8 +48,10 @@ public class Wister extends JFrame {
 			public void run() {
 				try {
 					Wister frame = new Wister();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
+					System.out.println(e.getMessage());
 					e.printStackTrace();
 				}
 			}
@@ -125,6 +120,7 @@ public class Wister extends JFrame {
 					if (name.equalsIgnoreCase("managerUser")) { // if the user is a manager open manager view
 						JFrame managerFrame = new JFrame();
 						managerFrame.setBounds(450, 220, 450, 334);
+						managerFrame.setLocationRelativeTo(null);
 
 						managerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -137,11 +133,13 @@ public class Wister extends JFrame {
 						JButton managerUpdateBtn = new JButton("Update");// TODO: EMAN
 						managerUpdateBtn.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								JFrame managerUpdare = new JFrame();
-								managerUpdare.setTitle("UPDATE");
-								managerUpdare.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-								managerUpdare.setBounds(100, 100, 550, 400);
-								managerUpdare.getContentPane().setLayout(new BorderLayout());
+
+								JFrame managerUpdate = new JFrame();
+								managerUpdate.setTitle("UPDATE");
+								managerUpdate.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+								managerUpdate.setBounds(100, 100, 550, 400);
+								managerUpdate.getContentPane().setLayout(new BorderLayout());
+								managerUpdate.setLocationRelativeTo(null);
 
 								JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -159,7 +157,7 @@ public class Wister extends JFrame {
 
 								JComboBox<String> comboBox_1 = new JComboBox<String>();
 								comboBox_1.setModel(new DefaultComboBoxModel<String>(
-										new String[] { "Salary", "Emp_Phone", "Role" }));
+										new String[] { "Salary", "Emp_Phone" }));
 								comboBox_1.setBounds(332, 98, 96, 22);
 								Employee.add(comboBox_1);
 
@@ -185,29 +183,28 @@ public class Wister extends JFrame {
 								btnNewButton.setBounds(332, 201, 96, 23);
 								Employee.add(btnNewButton);
 
-								btnNewButton.addActionListener(new ActionListener() {
+								btnNewButton.addActionListener(new ActionListener() {         // update empolyee info(manager veiw)
 									public void actionPerformed(ActionEvent E) {
 										try {
 											java.sql.Statement stm = con.createStatement();
-											if (comboBox_1.getSelectedItem().equals("Emp_Phone")
-													|| comboBox_1.getSelectedItem().equals("Role"))
+											if (comboBox_1.getSelectedItem().equals("Emp_Phone"))
 												numOfAffectedRow = stm.executeUpdate(
 														"UPDATE EMPLOYEE " +
-																"SET " + comboBox_1.getSelectedItem() + " = " + "\'"
-																+ textField.getText() + "\' " +
-																"WHERE Employee_ID=" + textField_6.getText());
+																"SET Emp_Phone = \'" + textField.getText() + "\' " +
+																" WHERE Employee_ID=" + textField_6.getText());
 											else {
-												int num = Integer.parseInt(textField.getText());
+												int num = Integer.parseInt(textField_6.getText());
 												numOfAffectedRow = stm.executeUpdate(
 														"UPDATE EMPLOYEE " +
-																"SET " + comboBox_1.getSelectedItem() + " = "
-																+ textField.getText() +
+																"SET Salary = "+ textField.getText() +
 																" WHERE Employee_ID=" + num);
 											}
 
 											if (numOfAffectedRow == 0)
-												JOptionPane.showMessageDialog(null,
-														"There is no Empolyee with the received ID");
+												JOptionPane.showMessageDialog(null,"There is no Empolyee with the received ID","not found :(",JOptionPane.ERROR_MESSAGE);
+											else 
+											JOptionPane.showMessageDialog(null,"The "+comboBox_1.getSelectedItem()+" of the Empolyee with the received ID ("+textField_6.getText()+") was updated to be: "+textField.getText(),"Updated seccessfully :)",JOptionPane.INFORMATION_MESSAGE);
+		
 
 										} catch (NumberFormatException e) {
 											JOptionPane.showMessageDialog(null, "please enter a number!", "Input Error",
@@ -239,16 +236,6 @@ public class Wister extends JFrame {
 								lblNewLabel_5.setBounds(10, 80, 96, 20);
 								Branch.add(lblNewLabel_5);
 
-								JButton btnNewButton_1 = new JButton("UPDATE");
-								btnNewButton_1.setBounds(399, 287, 96, 23);
-								Branch.add(btnNewButton_1);
-
-								btnNewButton_1.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent E) {
-
-									}
-								});
-
 								JComboBox<String> comboBox = new JComboBox<String>();
 								comboBox.setModel(new DefaultComboBoxModel<String>(
 										new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "07", "08", "09",
@@ -269,6 +256,40 @@ public class Wister extends JFrame {
 												"54", "55", "56", "57", "58", "59" }));
 								comboBox_2.setBounds(135, 136, 42, 22);
 								Branch.add(comboBox_2);
+
+								JButton btnNewButton_1 = new JButton("UPDATE");
+								btnNewButton_1.setBounds(399, 287, 96, 23);
+								Branch.add(btnNewButton_1);
+
+								btnNewButton_1.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent E) {
+
+                                        try{
+										java.sql.Statement stm = con.createStatement();
+										numOfAffectedRow= stm.executeUpdate(
+											"UPDATE BRANCH "+
+											"SET Work_time= \'"+comboBox.getSelectedItem()+":"+comboBox_2.getSelectedItem()+":00\' "+
+											"WHERE Branch_code = "+textField_1.getText()													
+										);
+                                        if(numOfAffectedRow==1)
+										  JOptionPane.showMessageDialog(null, "The working time of the branch("+textField_1.getText()+") was updated to be: "+
+										  comboBox.getSelectedItem()+":"+comboBox_2.getSelectedItem()+":00" , "Updated seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
+										  else if(numOfAffectedRow==0){
+											JOptionPane.showMessageDialog(null,"There is no Branch with the received Branch code!","not found :(",JOptionPane.ERROR_MESSAGE);
+										  }
+
+										}
+										
+										catch(SQLException e){
+											System.out.println(e.getMessage());
+										}
+										catch(Exception e){
+											System.err.println(e.getMessage());
+										}
+									}
+								});
+
+								
 
 								JLabel lblNewLabel_4 = new JLabel("Hour");
 								lblNewLabel_4.setBounds(86, 107, 49, 14);
@@ -301,8 +322,32 @@ public class Wister extends JFrame {
 								btnNewButton_2.setBounds(312, 140, 96, 23);
 								Item.add(btnNewButton_2);
 
-								managerUpdare.getContentPane().add(tabbedPane);
-								managerUpdare.setVisible(true);
+								btnNewButton_2.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent E){
+										try {
+											java.sql.Statement stm = con.createStatement();
+											int price=Integer.parseInt(textField_5.getText());
+											numOfAffectedRow=stm.executeUpdate(
+												"UPDATE ITEM "+
+												"SET Price="+price+
+												" WHERE Item_Name= \'"+textField_4.getText()+"\'"
+											);
+											if (numOfAffectedRow==0)
+											JOptionPane.showMessageDialog(null, "There is no Item with the received Name!","not found :(",JOptionPane.ERROR_MESSAGE);
+                                            else
+											JOptionPane.showMessageDialog(null, "The price of "+textField_4.getText()+" was updated to be: "+textField_5.getText()+".00SR","Updated seccessfully :)",JOptionPane.INFORMATION_MESSAGE);
+
+										} catch (SQLException e) {
+											System.err.println(e.getMessage());
+										}
+										catch(NumberFormatException e){
+											JOptionPane.showMessageDialog(null, "please enter a number to set the new price", "invalid input", JOptionPane.ERROR_MESSAGE);
+										}
+									}
+								});
+
+								managerUpdate.getContentPane().add(tabbedPane);
+								managerUpdate.setVisible(true);
 
 							}
 						});
@@ -385,8 +430,7 @@ public class Wister extends JFrame {
 											}
 
 											if (numOfAffectedRow == 0)
-												JOptionPane.showMessageDialog(null,
-														"There is no Empolyee with the received value");
+												JOptionPane.showMessageDialog(null, "There is no Empolyee with the received value","not found :(",JOptionPane.ERROR_MESSAGE);
 
 										} catch (NumberFormatException E) {
 											JOptionPane.showMessageDialog(null, "please enter a number", "Input Error",
@@ -425,8 +469,7 @@ public class Wister extends JFrame {
 											);
 
 											if (numOfAffectedRow == 0)
-												JOptionPane.showMessageDialog(null,
-														"There is no Branch with the recived Branch_code");
+												JOptionPane.showMessageDialog(null,"There is no Branch with the recived Branch_code","not found :(",JOptionPane.ERROR_MESSAGE);
 
 										} catch (NumberFormatException ex) {
 											JOptionPane.showMessageDialog(null, "please enter a number", "Input Error",
@@ -465,8 +508,7 @@ public class Wister extends JFrame {
 													"DELETE FROM ITEM " +
 															"WHERE Item_Name= \'" + textField_2.getText() + "\'");
 											if (numOfAffectedRow == 0)
-												JOptionPane.showMessageDialog(null,
-														"There is no item with the received name!");
+												JOptionPane.showMessageDialog(null,"There is no item with the received name!","not found :(",JOptionPane.ERROR_MESSAGE);
 										} catch (SQLException e) {
 											System.out.println(e.getMessage());
 										}
@@ -953,6 +995,7 @@ public class Wister extends JFrame {
 			}
 
 		});
+		
 		getContentPane().add(loginButton);
 
 		JLabel blank = new JLabel("");
