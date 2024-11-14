@@ -7,7 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -15,6 +17,8 @@ import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
 import com.mysql.cj.xdevapi.Statement;
 import java.awt.Image;
 import javax.swing.ButtonGroup;
@@ -126,13 +130,147 @@ public class Wister extends JFrame {
 						managerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 						JButton managerSearchBtn = new JButton("Search"); // TODO: EMAN
-						managerSearchBtn.addActionListener(new ActionListener() {           //'SEARCH' manager veiw
+						managerSearchBtn.addActionListener(new ActionListener() { // 'SEARCH' manager veiw
 							public void actionPerformed(ActionEvent e) {
+                                
+								JFrame managerSearch =new JFrame();
+								managerSearch.setTitle("SEARCH");
+								managerSearch.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+								managerSearch.setBounds(100, 100, 830, 400);
+								managerSearch.setLocationRelativeTo(null);
+								managerSearch.getContentPane().setLayout(new BorderLayout());
+
+								JTabbedPane tabbedPane = new JTabbedPane();
+
+								getContentPane().add(tabbedPane);
+
+								JPanel Employee = new JPanel();
+								Employee.setLayout(null);
+								tabbedPane.addTab("Employee", Employee);
+
+								JPanel Branch = new JPanel();
+								Branch.setLayout(null);
+								tabbedPane.addTab("Branch", Branch);
+
+								JPanel Item = new JPanel();
+								Item.setLayout(null);
+								tabbedPane.addTab("Item", Item);
+
+								JComboBox<String> comboBox = new JComboBox<>();
+								comboBox.setModel(new DefaultComboBoxModel<>(new String[] { "Emp_ID", "Emp_Name",
+										"Branch_code", "Role", "Gender", "Salary" }));
+								comboBox.setBounds(75, 43, 88, 22);
+								Employee.add(comboBox);
+
+								JLabel lblNewLabel = new JLabel("search by:");
+								lblNewLabel.setBounds(10, 45, 69, 18);
+								Employee.add(lblNewLabel);
+
+								JTextField textField = new JTextField();
+								textField.setBounds(270, 44, 96, 20);
+								Employee.add(textField);
+								textField.setColumns(10);
+
+								JLabel lblNewLabel_1 = new JLabel("value:");
+								lblNewLabel_1.setBounds(228, 45, 49, 19);
+								Employee.add(lblNewLabel_1);
+
+								JButton btnNewButton = new JButton("SEARCH");
+								btnNewButton.setBounds(607, 43, 102, 23);
+								Employee.add(btnNewButton);
+
+								Object[][] data = {};
+								JTable etable = new JTable(new DefaultTableModel(data,
+										new String[] { "ID", "Branch_Code", "Name", "Residence_Number", "Phone",
+												"Gender", "Role", "Neighborhood", "Street", "Post_Code", "Salary" }));
+								JTable btable = new JTable(new DefaultTableModel(data,
+										new String[] { "Branch_code", "Work_time", "City", "Neighborhood", "Street" }));
+								JTable itable = new JTable(new DefaultTableModel(data,
+										new String[] { "Item_Name", "Price", "Item_Type", "Calories" }));
+
+								etable.setEnabled(false);
+								btable.setEnabled(false);
+								itable.setEnabled(false);
+
+								JScrollPane escrollPane = new JScrollPane(etable);
+								JScrollPane bscrollPane = new JScrollPane(btable);
+								JScrollPane iscrollPane = new JScrollPane(itable);
+
+								escrollPane.setBounds(5, 120, 800, 200);
+								bscrollPane.setBounds(140, 120, 500, 200);
+								iscrollPane.setBounds(140, 120, 500, 200);
+
+								Employee.add(escrollPane);
+								Branch.add(bscrollPane);
+								Item.add(iscrollPane);
+
+								etable.getColumnModel().getColumn(0).setPreferredWidth(30);
+								etable.getColumnModel().getColumn(1).setPreferredWidth(80);
+								etable.getColumnModel().getColumn(2).setPreferredWidth(50);
+								etable.getColumnModel().getColumn(5).setPreferredWidth(40);
+								etable.getColumnModel().getColumn(6).setPreferredWidth(50);
+								etable.getColumnModel().getColumn(10).setPreferredWidth(40);
+								etable.getColumnModel().getColumn(3).setPreferredWidth(90);
+								etable.getColumnModel().getColumn(4).setPreferredWidth(65);
+								etable.getColumnModel().getColumn(8).setPreferredWidth(50);
+
+								JLabel lblNewLabel_2 = new JLabel("search by:");
+								lblNewLabel_2.setBounds(155, 45, 69, 18);
+								Branch.add(lblNewLabel_2);
+
+								JTextField textField_1 = new JTextField();
+								textField_1.setBounds(414, 44, 75, 20);
+								Branch.add(textField_1);
+								textField_1.setColumns(10);
+
+								JComboBox<String> comboBox_1 = new JComboBox<>();
+								comboBox_1.setModel(new DefaultComboBoxModel<>(new String[] { "Branch_code", "City" }));
+								comboBox_1.setBounds(221, 43, 88, 22);
+								Branch.add(comboBox_1);
+
+								JLabel lblNewLabel_3 = new JLabel("value:");
+								lblNewLabel_3.setBounds(367, 45, 49, 19);
+								Branch.add(lblNewLabel_3);
+
+								JButton btnNewButton_1 = new JButton("SEARCH");
+								btnNewButton_1.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {
+									}
+								});
+								btnNewButton_1.setBounds(552, 43, 88, 23);
+								Branch.add(btnNewButton_1);
+
+								JLabel lblNewLabel_4 = new JLabel("search by:");
+								lblNewLabel_4.setBounds(140, 47, 69, 22);
+								Item.add(lblNewLabel_4);
+
+								JComboBox<String> comboBox_2 = new JComboBox<>();
+								comboBox_2.setModel(
+										new DefaultComboBoxModel<>(new String[] { "Item_Name", "Item_Type", "Price" }));
+								comboBox_2.setBounds(203, 47, 81, 22);
+								Item.add(comboBox_2);
+
+								JLabel lblNewLabel_5 = new JLabel("value");
+								lblNewLabel_5.setBounds(339, 49, 37, 18);
+								Item.add(lblNewLabel_5);
+
+								JTextField textField_2 = new JTextField();
+								textField_2.setBounds(386, 46, 81, 20);
+								Item.add(textField_2);
+								textField_2.setColumns(10);
+
+								JButton btnNewButton_2 = new JButton("SEARCH");
+								btnNewButton_2.setBounds(525, 45, 115, 23);
+								Item.add(btnNewButton_2);
+                                
+								managerSearch.getContentPane().add(tabbedPane);
+								managerSearch.setVisible(true);
+
 							}
 						});
 
 						JButton managerUpdateBtn = new JButton("Update");// TODO: EMAN
-						managerUpdateBtn.addActionListener(new ActionListener() {           // 'UPDATE' manager veiw
+						managerUpdateBtn.addActionListener(new ActionListener() { // 'UPDATE' manager veiw
 							public void actionPerformed(ActionEvent e) {
 
 								JFrame managerUpdate = new JFrame();
@@ -184,7 +322,8 @@ public class Wister extends JFrame {
 								btnNewButton.setBounds(332, 201, 96, 23);
 								Employee.add(btnNewButton);
 
-								btnNewButton.addActionListener(new ActionListener() {         // update empolyee info(manager veiw)
+								btnNewButton.addActionListener(new ActionListener() { // update empolyee info(manager
+																						// veiw)
 									public void actionPerformed(ActionEvent E) {
 										try {
 											java.sql.Statement stm = con.createStatement();
@@ -197,15 +336,21 @@ public class Wister extends JFrame {
 												int num = Integer.parseInt(textField_6.getText());
 												numOfAffectedRow = stm.executeUpdate(
 														"UPDATE EMPLOYEE " +
-																"SET Salary = "+ textField.getText() +
+																"SET Salary = " + textField.getText() +
 																" WHERE Employee_ID=" + num);
 											}
 
 											if (numOfAffectedRow == 0)
-												JOptionPane.showMessageDialog(null,"There is no Empolyee with the received ID","not found :(",JOptionPane.ERROR_MESSAGE);
-											else 
-											JOptionPane.showMessageDialog(null,"The "+comboBox_1.getSelectedItem()+" of the Empolyee with the received ID ("+textField_6.getText()+") was updated to be: "+textField.getText(),"Updated seccessfully :)",JOptionPane.INFORMATION_MESSAGE);
-		
+												JOptionPane.showMessageDialog(null,
+														"There is no Empolyee with the received ID", "not found :(",
+														JOptionPane.ERROR_MESSAGE);
+											else
+												JOptionPane.showMessageDialog(null,
+														"The " + comboBox_1.getSelectedItem()
+																+ " of the Empolyee with the received ID ("
+																+ textField_6.getText() + ") was updated to be: "
+																+ textField.getText(),
+														"Updated seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
 
 										} catch (NumberFormatException e) {
 											JOptionPane.showMessageDialog(null, "please enter a number!", "Input Error",
@@ -265,32 +410,35 @@ public class Wister extends JFrame {
 								btnNewButton_1.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent E) {
 
-                                        try{
-										java.sql.Statement stm = con.createStatement();
-										numOfAffectedRow= stm.executeUpdate(
-											"UPDATE BRANCH "+
-											"SET Work_time= \'"+comboBox.getSelectedItem()+":"+comboBox_2.getSelectedItem()+":00\' "+
-											"WHERE Branch_code = "+textField_1.getText()													
-										);
-                                        if(numOfAffectedRow==1)
-										  JOptionPane.showMessageDialog(null, "The working time of the branch("+textField_1.getText()+") was updated to be: "+
-										  comboBox.getSelectedItem()+":"+comboBox_2.getSelectedItem()+":00" , "Updated seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
-										  else if(numOfAffectedRow==0){
-											JOptionPane.showMessageDialog(null,"There is no Branch with the received Branch code!","not found :(",JOptionPane.ERROR_MESSAGE);
-										  }
+										try {
+											java.sql.Statement stm = con.createStatement();
+											numOfAffectedRow = stm.executeUpdate(
+													"UPDATE BRANCH " +
+															"SET Work_time= \'" + comboBox.getSelectedItem() + ":"
+															+ comboBox_2.getSelectedItem() + ":00\' " +
+															"WHERE Branch_code = " + textField_1.getText());
+											if (numOfAffectedRow == 1)
+												JOptionPane.showMessageDialog(null,
+														"The working time of the branch(" + textField_1.getText()
+																+ ") was updated to be: " +
+																comboBox.getSelectedItem() + ":"
+																+ comboBox_2.getSelectedItem() + ":00",
+														"Updated seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
+											else if (numOfAffectedRow == 0) {
+												JOptionPane.showMessageDialog(null,
+														"There is no Branch with the received Branch code!",
+														"not found :(", JOptionPane.ERROR_MESSAGE);
+											}
 
 										}
-										
-										catch(SQLException e){
+
+										catch (SQLException e) {
 											System.out.println(e.getMessage());
-										}
-										catch(Exception e){
+										} catch (Exception e) {
 											System.err.println(e.getMessage());
 										}
 									}
 								});
-
-								
 
 								JLabel lblNewLabel_4 = new JLabel("Hour");
 								lblNewLabel_4.setBounds(86, 107, 49, 14);
@@ -324,25 +472,30 @@ public class Wister extends JFrame {
 								Item.add(btnNewButton_2);
 
 								btnNewButton_2.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent E){
+									public void actionPerformed(ActionEvent E) {
 										try {
 											java.sql.Statement stm = con.createStatement();
-											int price=Integer.parseInt(textField_5.getText());
-											numOfAffectedRow=stm.executeUpdate(
-												"UPDATE ITEM "+
-												"SET Price="+price+
-												" WHERE Item_Name= \'"+textField_4.getText()+"\'"
-											);
-											if (numOfAffectedRow==0)
-											JOptionPane.showMessageDialog(null, "There is no Item with the received Name!","not found :(",JOptionPane.ERROR_MESSAGE);
-                                            else
-											JOptionPane.showMessageDialog(null, "The price of "+textField_4.getText()+" was updated to be: "+textField_5.getText()+".00SR","Updated seccessfully :)",JOptionPane.INFORMATION_MESSAGE);
+											int price = Integer.parseInt(textField_5.getText());
+											numOfAffectedRow = stm.executeUpdate(
+													"UPDATE ITEM " +
+															"SET Price=" + price +
+															" WHERE Item_Name= \'" + textField_4.getText() + "\'");
+											if (numOfAffectedRow == 0)
+												JOptionPane.showMessageDialog(null,
+														"There is no Item with the received Name!", "not found :(",
+														JOptionPane.ERROR_MESSAGE);
+											else
+												JOptionPane.showMessageDialog(null,
+														"The price of " + textField_4.getText() + " was updated to be: "
+																+ textField_5.getText() + ".00SR",
+														"Updated seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
 
 										} catch (SQLException e) {
 											System.err.println(e.getMessage());
-										}
-										catch(NumberFormatException e){
-											JOptionPane.showMessageDialog(null, "please enter a number to set the new price", "invalid input", JOptionPane.ERROR_MESSAGE);
+										} catch (NumberFormatException e) {
+											JOptionPane.showMessageDialog(null,
+													"please enter a number to set the new price", "invalid input",
+													JOptionPane.ERROR_MESSAGE);
 										}
 									}
 								});
@@ -354,7 +507,7 @@ public class Wister extends JFrame {
 						});
 
 						JButton managerRemoveBtn = new JButton("Remove");// TODO: EMAN
-						managerRemoveBtn.addActionListener(new ActionListener() {           // 'REMOVE' manager veiw
+						managerRemoveBtn.addActionListener(new ActionListener() { // 'REMOVE' manager veiw
 							public void actionPerformed(ActionEvent e) {
 								JFrame managerRemove = new JFrame();
 								managerRemove.setTitle("REMOVE");
@@ -381,7 +534,7 @@ public class Wister extends JFrame {
 								// Add panels as tabs to the JTabbedPane
 								JLabel labal_2 = new JLabel("remove employees by thier:");
 								labal_2.setHorizontalAlignment(SwingConstants.CENTER);
-								labal_2.setBounds(10, 26, 181, 32);
+								labal_2.setBounds(134, 32, 181, 32);
 								Employee.add(labal_2);
 
 								// set up tab Employee (remove) until line 93
@@ -389,24 +542,20 @@ public class Wister extends JFrame {
 								comboBox.setModel(
 										new DefaultComboBoxModel<String>(new String[] { " Employee_ID", "Emp_Name",
 												"Gender", "Role", "Salary" }));
-								comboBox.setBounds(53, 69, 96, 20);
+								comboBox.setBounds(325, 38, 96, 20);
 								Employee.add(comboBox);
 
 								JTextField textField = new JTextField();
-								textField.setBounds(229, 69, 96, 20);
+								textField.setBounds(325, 79, 96, 20);
 								Employee.add(textField);
 								textField.setColumns(10);
 
-								JLabel lblNewLabel = new JLabel("enter a value to remove all");
-								lblNewLabel.setBounds(213, 23, 171, 20);
+								JLabel lblNewLabel = new JLabel("enter a value to remove all employees that match:");
+								lblNewLabel.setBounds(10, 79, 305, 20);
 								Employee.add(lblNewLabel);
 
-								JLabel lblNewLabel_1 = new JLabel("employees that match:");
-								lblNewLabel_1.setBounds(229, 45, 138, 20);
-								Employee.add(lblNewLabel_1);
-
 								JButton button = new JButton("Remove");
-								button.setBounds(314, 173, 89, 23);
+								button.setBounds(332, 139, 89, 23);
 								Employee.add(button);
 
 								button.addActionListener(new ActionListener() {
@@ -432,10 +581,15 @@ public class Wister extends JFrame {
 											}
 
 											if (numOfAffectedRow == 0)
-												JOptionPane.showMessageDialog(null, "There is no Empolyee with the received value","not found :(",JOptionPane.ERROR_MESSAGE);
-                                            else
-											JOptionPane.showMessageDialog(null, "All Empolyees with \'"+comboBox.getSelectedItem()+" = "+textField.getText()+"\' are Removed seccessfully ","Removed seccessfully :)",JOptionPane.INFORMATION_MESSAGE);
-    
+												JOptionPane.showMessageDialog(null,
+														"There is no Empolyee with the received value", "not found :(",
+														JOptionPane.ERROR_MESSAGE);
+											else
+												JOptionPane.showMessageDialog(null,
+														"All Empolyees with \'" + comboBox.getSelectedItem() + " = "
+																+ textField.getText() + "\' are Removed seccessfully ",
+														"Removed seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
+
 										} catch (NumberFormatException E) {
 											JOptionPane.showMessageDialog(null, "please enter a number", "Input Error",
 													JOptionPane.WARNING_MESSAGE);
@@ -447,16 +601,16 @@ public class Wister extends JFrame {
 
 								JLabel lblNewLabel_2 = new JLabel(
 										"enter the code of the Branch \r\nyou want to remove:");
-								lblNewLabel_2.setBounds(10, 36, 257, 31);
+								lblNewLabel_2.setBounds(10, 36, 305, 31);
 								Branch.add(lblNewLabel_2);
 
 								JTextField textField_1 = new JTextField();
-								textField_1.setBounds(277, 41, 96, 20);
+								textField_1.setBounds(325, 41, 96, 20);
 								Branch.add(textField_1);
 								textField_1.setColumns(10);
 
 								JButton Button_1 = new JButton("Remove");
-								Button_1.setBounds(277, 72, 96, 23);
+								Button_1.setBounds(325, 72, 96, 23);
 								Branch.add(Button_1);
 
 								Button_1.addActionListener(new ActionListener() {
@@ -473,20 +627,27 @@ public class Wister extends JFrame {
 											);
 
 											if (numOfAffectedRow == 0)
-												JOptionPane.showMessageDialog(null,"There is no Branch with the recived Branch_code","not found :(",JOptionPane.ERROR_MESSAGE);
-                                            else 
-											    JOptionPane.showMessageDialog(null, "The Branch (with Branch_code = "+textField_1.getText()+") is removed seccessfully.", "Removed seccessfully :)",JOptionPane.INFORMATION_MESSAGE);
+												JOptionPane.showMessageDialog(null,
+														"There is no Branch with the recived Branch_code",
+														"not found :(", JOptionPane.ERROR_MESSAGE);
+											else
+												JOptionPane.showMessageDialog(null,
+														"The Branch (with Branch_code = " + textField_1.getText()
+																+ ") is removed seccessfully.",
+														"Removed seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
 										} catch (NumberFormatException ex) {
 											JOptionPane.showMessageDialog(null, "please enter a number", "Input Error",
 													JOptionPane.WARNING_MESSAGE);
 
 										}
 
-                                        catch(SQLIntegrityConstraintViolationException eX){
-											JOptionPane.showMessageDialog(null,"CAN'T COMPLETE REMOVAL!!!\n A number of employees are working in Branch("+textField_1.getText()+").","Remove fails :(",JOptionPane.ERROR_MESSAGE);
+										catch (SQLIntegrityConstraintViolationException eX) {
+											JOptionPane.showMessageDialog(null,
+													"CAN'T COMPLETE REMOVAL!!!\n A number of employees are working in Branch("
+															+ textField_1.getText() + ").",
+													"Remove fails :(", JOptionPane.ERROR_MESSAGE);
 
-										}
-										catch (SQLException ex) {
+										} catch (SQLException ex) {
 											System.out.println(ex.getMessage());
 
 										}
@@ -517,9 +678,14 @@ public class Wister extends JFrame {
 													"DELETE FROM ITEM " +
 															"WHERE Item_Name= \'" + textField_2.getText() + "\'");
 											if (numOfAffectedRow == 0)
-												JOptionPane.showMessageDialog(null,"There is no item with the received name!","not found :(",JOptionPane.ERROR_MESSAGE);
-											else 
-											JOptionPane.showMessageDialog(null,"The Item ( "+textField_2.getText()+" ) is removed seccessfully.","Removed Seccessfully :)",JOptionPane.INFORMATION_MESSAGE);
+												JOptionPane.showMessageDialog(null,
+														"There is no item with the received name!", "not found :(",
+														JOptionPane.ERROR_MESSAGE);
+											else
+												JOptionPane.showMessageDialog(null,
+														"The Item ( " + textField_2.getText()
+																+ " ) is removed seccessfully.",
+														"Removed Seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
 
 										} catch (SQLException e) {
 											System.out.println(e.getMessage());
@@ -1007,7 +1173,7 @@ public class Wister extends JFrame {
 			}
 
 		});
-		
+
 		getContentPane().add(loginButton);
 
 		JLabel blank = new JLabel("");
