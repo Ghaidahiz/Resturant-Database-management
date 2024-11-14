@@ -31,6 +31,7 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 public class Wister extends JFrame {
 
@@ -125,13 +126,13 @@ public class Wister extends JFrame {
 						managerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 						JButton managerSearchBtn = new JButton("Search"); // TODO: EMAN
-						managerSearchBtn.addActionListener(new ActionListener() {
+						managerSearchBtn.addActionListener(new ActionListener() {           //'SEARCH' manager veiw
 							public void actionPerformed(ActionEvent e) {
 							}
 						});
 
 						JButton managerUpdateBtn = new JButton("Update");// TODO: EMAN
-						managerUpdateBtn.addActionListener(new ActionListener() {
+						managerUpdateBtn.addActionListener(new ActionListener() {           // 'UPDATE' manager veiw
 							public void actionPerformed(ActionEvent e) {
 
 								JFrame managerUpdate = new JFrame();
@@ -353,12 +354,13 @@ public class Wister extends JFrame {
 						});
 
 						JButton managerRemoveBtn = new JButton("Remove");// TODO: EMAN
-						managerRemoveBtn.addActionListener(new ActionListener() {
+						managerRemoveBtn.addActionListener(new ActionListener() {           // 'REMOVE' manager veiw
 							public void actionPerformed(ActionEvent e) {
 								JFrame managerRemove = new JFrame();
 								managerRemove.setTitle("REMOVE");
 								managerRemove.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 								managerRemove.setBounds(100, 100, 550, 400);
+								managerRemove.setLocationRelativeTo(null);
 								managerRemove.getContentPane().setLayout(new BorderLayout());
 
 								JTabbedPane tabbedPane = new JTabbedPane();
@@ -431,7 +433,9 @@ public class Wister extends JFrame {
 
 											if (numOfAffectedRow == 0)
 												JOptionPane.showMessageDialog(null, "There is no Empolyee with the received value","not found :(",JOptionPane.ERROR_MESSAGE);
-
+                                            else
+											JOptionPane.showMessageDialog(null, "All Empolyees with \'"+comboBox.getSelectedItem()+" = "+textField.getText()+"\' are Removed seccessfully ","Removed seccessfully :)",JOptionPane.INFORMATION_MESSAGE);
+    
 										} catch (NumberFormatException E) {
 											JOptionPane.showMessageDialog(null, "please enter a number", "Input Error",
 													JOptionPane.WARNING_MESSAGE);
@@ -470,13 +474,18 @@ public class Wister extends JFrame {
 
 											if (numOfAffectedRow == 0)
 												JOptionPane.showMessageDialog(null,"There is no Branch with the recived Branch_code","not found :(",JOptionPane.ERROR_MESSAGE);
-
+                                            else 
+											    JOptionPane.showMessageDialog(null, "The Branch (with Branch_code = "+textField_1.getText()+") is removed seccessfully.", "Removed seccessfully :)",JOptionPane.INFORMATION_MESSAGE);
 										} catch (NumberFormatException ex) {
 											JOptionPane.showMessageDialog(null, "please enter a number", "Input Error",
 													JOptionPane.WARNING_MESSAGE);
 
 										}
 
+                                        catch(SQLIntegrityConstraintViolationException eX){
+											JOptionPane.showMessageDialog(null,"CAN'T COMPLETE REMOVAL!!!\n A number of employees are working in Branch("+textField_1.getText()+").","Remove fails :(",JOptionPane.ERROR_MESSAGE);
+
+										}
 										catch (SQLException ex) {
 											System.out.println(ex.getMessage());
 
@@ -509,6 +518,9 @@ public class Wister extends JFrame {
 															"WHERE Item_Name= \'" + textField_2.getText() + "\'");
 											if (numOfAffectedRow == 0)
 												JOptionPane.showMessageDialog(null,"There is no item with the received name!","not found :(",JOptionPane.ERROR_MESSAGE);
+											else 
+											JOptionPane.showMessageDialog(null,"The Item ( "+textField_2.getText()+" ) is removed seccessfully.","Removed Seccessfully :)",JOptionPane.INFORMATION_MESSAGE);
+
 										} catch (SQLException e) {
 											System.out.println(e.getMessage());
 										}
