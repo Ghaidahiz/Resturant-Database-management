@@ -13,8 +13,8 @@ public class App {
     public static void main(String[] args) throws Exception {
         App app = new App();
         app.createConnection(); // this creates the connection with the data base
-        JFrame managerRemove = new JFrame(),
-                managerUpdare = new JFrame();
+        JFrame managerRemove = new JFrame();
+                
 
         { // ************ MANAGER REMOVE VEIW *************
             managerRemove.setTitle("REMOVE");
@@ -181,7 +181,9 @@ public class App {
             managerRemove.setVisible(true);
         } // END OF MANAGER REMOVE VEIW
 
+
         { // ************ MANAGER UPDATE VEIW *************
+            JFrame managerUpdare = new JFrame();
             managerUpdare.setTitle("UPDATE");
             managerUpdare.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             managerUpdare.setBounds(100, 100, 550, 400);
@@ -282,6 +284,12 @@ public class App {
             btnNewButton_1.setBounds(399, 287, 96, 23);
             Branch.add(btnNewButton_1);
 
+            btnNewButton_1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent E){
+                    
+                }
+            });
+
             JComboBox<String> comboBox = new JComboBox<String>();
             comboBox.setModel(new DefaultComboBoxModel<String>(
                     new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "07", "08", "09", "10", "11", "12",
@@ -334,21 +342,11 @@ public class App {
 
         } // END OF MANAGER UPDATE VEIW
 
-        Statement stmt = con.createStatement();// this creates a statement so we can send it to the database
-        ResultSet rs = stmt.executeQuery( // we save the results that are made by the query is rs
-                " SELECT * " +
-                        " FROM EMPLOYEE " +
-                        "WHERE Emp_Name = 'Ali' ");
-
-        while (rs.next()) {// this reads the results and prints it
-            System.out.println(rs.getString(1));// emp id
-            System.out.println(rs.getString(2));// emp branch
-            System.out.println(rs.getString(3));// emp name
-        }
-
-        // GUI IS HERE
+       
 
     }
+
+
 
     void createConnection() {
         try {
