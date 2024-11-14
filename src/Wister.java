@@ -251,8 +251,8 @@ public class Wister extends JFrame {
 				String dbEndPoint = "jdbc:mysql://" + dotenv.get("DB_ENDPOINT") + ":3306/WISTERDATABASE";
 				boolean isAuthenticated = false;
 
-				try (Connection conn = DriverManager.getConnection(dbEndPoint, username, password)) {
-					if (conn != null) {
+				try (Connection con = DriverManager.getConnection(dbEndPoint, username, password)) {
+					if (con != null) {
 						System.out.println("Login successful!");
 						isAuthenticated = true;
 					}
