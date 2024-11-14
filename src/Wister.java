@@ -9,9 +9,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -21,6 +23,7 @@ import com.mysql.cj.xdevapi.Statement;
 
 import java.awt.Image;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -328,6 +331,221 @@ public class Wister extends JFrame {
 
 								// Add panels as tabs to the JTabbedPane
 								tabbedPane.addTab("Employee",Employee);
+								JLabel lblNewLabel = new JLabel("Employee ID:");
+		
+								JTextField empId = new JTextField();
+		empId.setColumns(10);
+		
+		JLabel emp_name = new JLabel("Name:");
+		
+		JTextField empName = new JTextField();
+		empName.setColumns(10);
+		
+		JLabel lblResidenceNumber = new JLabel("Residence Number:");
+		
+		JTextField textField = new JTextField();
+		textField.setColumns(10);
+		
+		JLabel lblPhoneNumber = new JLabel("Phone Number:");
+		
+		JTextField textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("Neighborhood:");
+		
+		JTextField textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("Enter the new employee's info:");
+		
+		JLabel lblNewLabel_3_1 = new JLabel("Street:");
+		
+		JTextField textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		
+		JTextField textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		
+		JLabel lblNewLabel_3_1_1 = new JLabel("Post Code:");
+		
+		JLabel lblNewLabel_3_1_1_1 = new JLabel("Branch:");
+		
+		JLabel lblNewLabel_3_1_1_1_1 = new JLabel("Gender:");
+		
+		JRadioButton rdbtnMale = new JRadioButton("Male");
+		
+		JRadioButton rdbtnFemale = new JRadioButton("Female");
+        ButtonGroup group = new ButtonGroup();
+        group.add(rdbtnMale);
+        group.add(rdbtnFemale);
+
+		
+		JLabel lblNewLabel_3_1_1_1_1_1 = new JLabel("Role:");
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Chef", "Cashier", "Server"}));
+		
+		JButton btnNewButton = new JButton("Add");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		
+		JLabel lblNewLabel_3_1_1_2 = new JLabel("Salary:");
+		
+		JTextField textField_5 = new JTextField();
+		textField_5.setColumns(10);
+		
+		JComboBox comboBox_1_1 = new JComboBox(); //TODO: FIXXXX
+		comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] {"Hi", "Hello", "Test"}));
+		GroupLayout gl_Employee = new GroupLayout(Employee);
+		gl_Employee.setHorizontalGroup(
+			gl_Employee.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Employee.createSequentialGroup()
+					.addGap(166)
+					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_Employee.createSequentialGroup()
+					.addGap(40)
+					.addComponent(lblNewLabel)
+					.addComponent(empId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_Employee.createSequentialGroup()
+					.addGap(82)
+					.addComponent(emp_name)
+					.addComponent(empName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(46)
+					.addComponent(lblNewLabel_3_1_1_1, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
+					.addGap(5)
+					.addComponent(comboBox_1_1, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_Employee.createSequentialGroup()
+					.addGap(80)
+					.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel_3_1_1_2, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_Employee.createSequentialGroup()
+							.addGap(42)
+							.addComponent(textField_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(46)
+					.addComponent(lblNewLabel_3_1_1_1_1, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
+					.addGap(5)
+					.addComponent(rdbtnMale, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+					.addGap(12)
+					.addComponent(rdbtnFemale, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_Employee.createSequentialGroup()
+					.addGroup(gl_Employee.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+							.addComponent(lblResidenceNumber, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Employee.createSequentialGroup()
+								.addGap(122)
+								.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_Employee.createSequentialGroup()
+								.addComponent(lblPhoneNumber, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGroup(gl_Employee.createSequentialGroup()
+								.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+					.addGap(27)
+					.addGroup(gl_Employee.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_Employee.createSequentialGroup()
+							.addComponent(lblNewLabel_3_1_1_1_1_1)
+							.addGap(18)
+							.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_Employee.createSequentialGroup()
+								.addGap(27)
+								.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+									.addComponent(lblNewLabel_3_1, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+									.addGroup(gl_Employee.createSequentialGroup()
+										.addGap(40)
+										.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+							.addGroup(gl_Employee.createSequentialGroup()
+								.addComponent(lblNewLabel_3_1_1)
+								.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))
+				.addGroup(Alignment.TRAILING, gl_Employee.createSequentialGroup()
+					.addContainerGap(229, Short.MAX_VALUE)
+					.addComponent(btnNewButton)
+					.addGap(226))
+		);
+		gl_Employee.setVerticalGroup(
+			gl_Employee.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Employee.createSequentialGroup()
+					.addGap(31)
+					.addComponent(lblNewLabel_1)
+					.addGap(6)
+					.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_Employee.createSequentialGroup()
+							.addGap(5)
+							.addComponent(lblNewLabel))
+						.addComponent(empId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_Employee.createSequentialGroup()
+							.addGap(11)
+							.addComponent(emp_name))
+						.addGroup(gl_Employee.createSequentialGroup()
+							.addGap(6)
+							.addComponent(empName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_Employee.createSequentialGroup()
+							.addGap(4)
+							.addComponent(lblNewLabel_3_1_1_1))
+						.addComponent(comboBox_1_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(2)
+					.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_Employee.createSequentialGroup()
+							.addGap(3)
+							.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_Employee.createSequentialGroup()
+									.addGap(4)
+									.addComponent(lblNewLabel_3_1_1_2))
+								.addComponent(textField_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_Employee.createSequentialGroup()
+							.addGap(3)
+							.addComponent(lblNewLabel_3_1_1_1_1))
+						.addComponent(rdbtnMale)
+						.addComponent(rdbtnFemale))
+					.addGap(1)
+					.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_Employee.createSequentialGroup()
+							.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_Employee.createSequentialGroup()
+									.addGap(5)
+									.addComponent(lblResidenceNumber))
+								.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_Employee.createSequentialGroup()
+									.addGap(5)
+									.addComponent(lblPhoneNumber))
+								.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(2)
+							.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_Employee.createSequentialGroup()
+									.addGap(5)
+									.addComponent(lblNewLabel_3))
+								.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_Employee.createSequentialGroup()
+							.addGap(5)
+							.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel_3_1_1_1_1_1)
+								.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_Employee.createSequentialGroup()
+									.addGap(5)
+									.addComponent(lblNewLabel_3_1))
+								.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(2)
+							.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_Employee.createSequentialGroup()
+									.addGap(10)
+									.addComponent(lblNewLabel_3_1_1))
+								.addGroup(gl_Employee.createSequentialGroup()
+									.addGap(5)
+									.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))
+					.addGap(28)
+					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addGap(42))
+		);
+		Employee.setLayout(gl_Employee);
+
 								tabbedPane.addTab("Branch",Branch);
 								tabbedPane.addTab("Item",Item);
 						
@@ -474,7 +692,7 @@ public class Wister extends JFrame {
 		springLayout.putConstraint(SpringLayout.EAST, blank, -433, SpringLayout.EAST, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, msg, 25, SpringLayout.EAST, blank);
 		springLayout.putConstraint(SpringLayout.NORTH, blank, 48, SpringLayout.NORTH, getContentPane());
-		ImageIcon imageIcon = new ImageIcon(new ImageIcon("/Users/ghaida/Downloads/Subject.png").getImage()
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon("img/Subject.png").getImage()
 				.getScaledInstance(50, 50, Image.SCALE_DEFAULT));
 
 		blank.setIcon(imageIcon);
