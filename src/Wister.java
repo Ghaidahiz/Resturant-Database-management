@@ -1,16 +1,17 @@
 
-import java.sql.*;
 import io.github.cdimascio.dotenv.Dotenv;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.Popup;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import java.awt.Image;
@@ -113,27 +114,56 @@ public class Wister extends JFrame {
 
 						managerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-						JButton managerSearch = new JButton("Search"); //TODO: EMAN
-						managerSearch.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-							}
-						});	
-
-						JButton managerUpdate = new JButton("Update");//TODO: EMAN
-						managerUpdate.addActionListener(new ActionListener() {
+						JButton managerSearchBtn = new JButton("Search"); // TODO: EMAN
+						managerSearchBtn.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
 						});
 
-						JButton managerRemove = new JButton("Remove");//TODO: EMAN
-						managerRemove.addActionListener(new ActionListener() {
+						JButton managerUpdateBtn = new JButton("Update");// TODO: EMAN
+						managerUpdateBtn.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
 						});
 
-						JButton managerAdd = new JButton("Add"); //TODO: Ghaida
-						managerAdd.addActionListener(new ActionListener() {
+						JButton managerRemoveBtn = new JButton("Remove");// TODO: EMAN
+						managerRemoveBtn.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
+							}
+						});
+
+						JButton managerAddBtn = new JButton("Add"); // TODO: Ghaida
+						managerAddBtn.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								JFrame managerAdd= new JFrame();
+								managerAdd.setTitle("Add");
+								managerAdd.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+								managerAdd.setBounds(100, 100, 550, 400);
+								managerAdd.getContentPane().setLayout(new BorderLayout());
+
+								JTabbedPane tabbedPane = new JTabbedPane();
+
+								// Create panels to add to each tab
+								JPanel Employee = new JPanel();
+								Employee.setLayout(null);
+
+								JPanel Branch = new JPanel();
+								Branch.setLayout(null);
+
+								JPanel Item = new JPanel();
+								Item.setLayout(null);
+
+								// Add panels as tabs to the JTabbedPane
+								tabbedPane.addTab("Employee",Employee);
+								tabbedPane.addTab("Branch",Branch);
+								tabbedPane.addTab("Item",Item);
+						
+								
+							  managerAdd.getContentPane().add(tabbedPane);
+						
+							  managerAdd.setVisible(true);
+								
+
 							}
 						});
 
@@ -145,13 +175,13 @@ public class Wister extends JFrame {
 										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 												.addGroup(groupLayout.createSequentialGroup().addGap(151)
 														.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-																.addComponent(managerAdd, GroupLayout.PREFERRED_SIZE,
+																.addComponent(managerAddBtn, GroupLayout.PREFERRED_SIZE,
 																		149, GroupLayout.PREFERRED_SIZE)
-																.addComponent(managerRemove, GroupLayout.PREFERRED_SIZE,
+																.addComponent(managerRemoveBtn, GroupLayout.PREFERRED_SIZE,
 																		149, GroupLayout.PREFERRED_SIZE)
-																.addComponent(managerUpdate, GroupLayout.PREFERRED_SIZE,
+																.addComponent(managerUpdateBtn, GroupLayout.PREFERRED_SIZE,
 																		149, GroupLayout.PREFERRED_SIZE)
-																.addComponent(managerSearch, GroupLayout.PREFERRED_SIZE,
+																.addComponent(managerSearchBtn, GroupLayout.PREFERRED_SIZE,
 																		149, GroupLayout.PREFERRED_SIZE)))
 												.addGroup(groupLayout.createSequentialGroup().addGap(29)
 														.addComponent(lblNewLabel)))
@@ -159,44 +189,44 @@ public class Wister extends JFrame {
 						groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup().addGap(27).addComponent(lblNewLabel)
 										.addGap(18)
-										.addComponent(managerAdd, GroupLayout.PREFERRED_SIZE, 53,
+										.addComponent(managerAddBtn, GroupLayout.PREFERRED_SIZE, 53,
 												GroupLayout.PREFERRED_SIZE)
 										.addGap(6)
-										.addComponent(managerRemove, GroupLayout.PREFERRED_SIZE, 53,
+										.addComponent(managerRemoveBtn, GroupLayout.PREFERRED_SIZE, 53,
 												GroupLayout.PREFERRED_SIZE)
 										.addGap(6)
-										.addComponent(managerUpdate, GroupLayout.PREFERRED_SIZE, 53,
+										.addComponent(managerUpdateBtn, GroupLayout.PREFERRED_SIZE, 53,
 												GroupLayout.PREFERRED_SIZE)
-										.addGap(6).addComponent(managerSearch, GroupLayout.PREFERRED_SIZE, 53,
+										.addGap(6).addComponent(managerSearchBtn, GroupLayout.PREFERRED_SIZE, 53,
 												GroupLayout.PREFERRED_SIZE)
 										.addGap(15)));
 						managerFrame.getContentPane().setLayout(groupLayout);
 						managerFrame.setVisible(true);
-					} else if (name.equalsIgnoreCase("cashierUser")) {  // if the user is a cashier open cashier view
+					} else if (name.equalsIgnoreCase("cashierUser")) { // if the user is a cashier open cashier view
 						JFrame cashierFrame = new JFrame();
 						cashierFrame.setBounds(450, 220, 450, 334);
 
 						cashierFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-						JButton cashierSearch = new JButton("Search"); //TODO: RENAD
+						JButton cashierSearch = new JButton("Search"); // TODO: RENAD
 						cashierSearch.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
-						});	
+						});
 
-						JButton cashierUpdate = new JButton("Update");//TODO: RENAD
+						JButton cashierUpdate = new JButton("Update");// TODO: RENAD
 						cashierUpdate.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
 						});
 
-						JButton cashierRemove = new JButton("Remove");//TODO: RENAD
+						JButton cashierRemove = new JButton("Remove");// TODO: RENAD
 						cashierRemove.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
 						});
 
-						JButton cashierAdd = new JButton("Add"); //TODO: Ghaida
+						JButton cashierAdd = new JButton("Add"); // TODO: Ghaida
 						cashierAdd.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
