@@ -333,6 +333,45 @@ public class Wister extends JFrame {
 								JButton btnNewButton_2 = new JButton("SEARCH");
 								btnNewButton_2.setBounds(525, 45, 115, 23);
 								Item.add(btnNewButton_2);
+
+								btnNewButton_2.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent E){
+										try{
+                                      java.sql.Statement stm =con.createStatement();
+									  ResultSet resultSet;
+									  if(comboBox_2.getSelectedItem().equals("Show All"))
+                                        resultSet=stm.executeQuery(
+											"SELECT *"+
+											" FROM ITEM "
+										);
+										else if(comboBox_2.getSelectedItem().equals("Price")){
+											double num = Double.parseDouble(textField_2.getText());
+										       resultSet= stm.executeQuery(
+												"SELECT * "+
+												"FROM ITEM "+
+												"WHERE Price="+num
+											   );
+										}
+										else
+										 resultSet=stm.executeQuery(
+											"SELECT * "+
+											"FROM ITEM "+
+											" WHERE "+comboBox_2.getSelectedItem()+"= \'"+textField_2.getText()+"\'"
+										 );
+
+										imodel.setRowCount(0);
+										fillITable(imodel, resultSet);
+										
+									}
+									catch(NumberFormatException e){
+										JOptionPane.showMessageDialog(null, "Please Enter a number!", "invalid input", JOptionPane.ERROR_MESSAGE);
+
+									}
+								    catch(SQLException e){
+										System.out.println(e.getMessage());
+									}
+								}
+								});	
                                 
 								managerSearch.getContentPane().add(tabbedPane);
 								managerSearch.setVisible(true);
