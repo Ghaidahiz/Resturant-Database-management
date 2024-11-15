@@ -14,10 +14,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class App {
     static Connection con;
+    static int numOfAffectedRow;
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public static void main(String[] args) throws Exception {
         App app = new App();
         app.createConnection(); // this creates the connection with the data base
@@ -33,11 +39,8 @@ public class App {
             System.out.println(rs.getString(2));// emp branch
             System.out.println(rs.getString(3));// emp name
         }
-      
+        
         // GUI IS HERE
-         // cashierSearch();
-        // cashierUpdate();
-        // removeCashier();
 
     }
 
@@ -56,7 +59,7 @@ public class App {
             con = DriverManager.getConnection(dbEndPoint, dbAdmin, dbPassword);// all -> variables in env
             System.out.println("db connection successful");
 
-
+            
 
         } catch (ClassNotFoundException ex) {
             System.out.println("ERRORRRR! Driver class not found." + ex.getMessage());
