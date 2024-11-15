@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.text.SimpleDateFormat;
+
 import io.github.cdimascio.dotenv.Dotenv;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -34,13 +36,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 public class Wister extends JFrame {
 
@@ -162,8 +160,8 @@ public class Wister extends JFrame {
 								tabbedPane.addTab("Item", Item);
 
 								JComboBox<String> comboBox = new JComboBox<>();
-								comboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Show All", "Emp_ID", "Emp_Name",
-										"Branch_code", "Role", "Gender", "Salary" }));
+								comboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Show All", "Employee_ID", "Emp_Name",
+										"Bcode", "Role", "Gender", "Salary" }));
 								comboBox.setBounds(75, 43, 88, 22);
 								Employee.add(comboBox);
 
@@ -185,13 +183,12 @@ public class Wister extends JFrame {
 								Employee.add(btnNewButton);
 
 								Object[][] data = {};
-								JTable etable = new JTable(new DefaultTableModel(data,
-										new String[] { "ID", "Branch_Code", "Name", "Residence_Number", "Phone",
-												"Gender", "Role", "Neighborhood", "Street", "Post_Code", "Salary" }));
-								JTable btable = new JTable(new DefaultTableModel(data,
-										new String[] { "Branch_code", "Work_time", "City", "Neighborhood", "Street" }));
-								JTable itable = new JTable(new DefaultTableModel(data,
-										new String[] { "Item_Name", "Price", "Item_Type", "Calories" }));
+								DefaultTableModel emodel = new DefaultTableModel(data,new String[] { "ID", "Branch_Code", "Name", "Residence_Number", "Phone","Gender", "Role", "Neighborhood", "Street", "Post_Code", "Salary" });
+								DefaultTableModel bmodel = new DefaultTableModel(data,new String[] { "Branch_code", "Work_time", "City", "Neighborhood", "Street" });
+								DefaultTableModel imodel = new DefaultTableModel(data,new String[] { "Item_Name", "Price", "Item_Type", "Calories" });
+								JTable etable = new JTable(emodel);
+								JTable btable = new JTable(bmodel);
+								JTable itable = new JTable(imodel);
 
 								etable.setEnabled(false);
 								btable.setEnabled(false);
@@ -228,7 +225,7 @@ public class Wister extends JFrame {
 											   resultSet=stm.executeQuery(
 												"SELECT * "+
 												"FROM EMPLOYEE ");
-										    else if(comboBox.getSelectedItem().equals("Emp_ID") || comboBox.getSelectedItem().equals("Branch_code") || comboBox.getSelectedItem().equals("Salary") ){
+										    else if(comboBox.getSelectedItem().equals("Employee_ID") || comboBox.getSelectedItem().equals("Branch_code") || comboBox.getSelectedItem().equals("Salary") ){
 											    int num = Integer.parseInt(textField.getText());
 												resultSet = stm.executeQuery(
 												"SELECT * "+
@@ -242,11 +239,12 @@ public class Wister extends JFrame {
 													"WHERE "+comboBox.getSelectedItem()+"= \'"+textField.getText()+"\'"
 
 												);
-												
+												emodel.setRowCount(0);
+												fillETable(emodel,resultSet);
 
 										}
 										catch(NumberFormatException ex){
-											JOptionPane.showMessageDialog(null, "Please Enter a umber!", "invalid input", JOptionPane.ERROR_MESSAGE);
+											JOptionPane.showMessageDialog(null, "Please Enter a number!", "invalid input", JOptionPane.ERROR_MESSAGE);
 										}
 										catch(SQLException ex){
 											System.out.println(ex.getMessage());
@@ -264,7 +262,7 @@ public class Wister extends JFrame {
 								textField_1.setColumns(10);
 
 								JComboBox<String> comboBox_1 = new JComboBox<>();
-								comboBox_1.setModel(new DefaultComboBoxModel<>(new String[] { "Branch_code", "City" }));
+								comboBox_1.setModel(new DefaultComboBoxModel<>(new String[] {"Show All", "Branch_code", "City" }));
 								comboBox_1.setBounds(221, 43, 88, 22);
 								Branch.add(comboBox_1);
 
@@ -276,14 +274,37 @@ public class Wister extends JFrame {
 								btnNewButton_1.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent e) {
 										try{
+											ResultSet resultSet;
 											java.sql.Statement stm = con.createStatement();
-											ResultSet resultSet = stm.executeQuery(
-												"SELECT "
+											if(comboBox_1.getSelectedItem().equals("Show All"))
+											    resultSet = stm.executeQuery(
+												"SELECT *"+
+												" FROM BRANCH "
 												);
+											else if(comboBox_1.getSelectedItem().equals("City"))
+											 resultSet = stm.executeQuery(
+												"SELECT *"+
+												" FROM BRANCH "+
+												"WHERE City=\'"+textField_1.getText()+"\'"
+												);
+											else{
+												int num = Integer.parseInt(textField_1.getText());
+												resultSet = stm.executeQuery(
+												"SELECT *"+
+												" FROM BRANCH "+
+												"WHERE Branch_code="+num
+												);
+											}
+											bmodel.setRowCount(0);
+											fillBTable(bmodel, resultSet);
+										
 
 										}
+										catch(NumberFormatException ex){
+											JOptionPane.showMessageDialog(null, "Please Enter a number!", "invalid input", JOptionPane.ERROR_MESSAGE);
+										}
 										catch(SQLException ex){
-
+                                             System.out.println(ex.getMessage());
 										}
 									}
 								});
@@ -296,7 +317,7 @@ public class Wister extends JFrame {
 
 								JComboBox<String> comboBox_2 = new JComboBox<>();
 								comboBox_2.setModel(
-										new DefaultComboBoxModel<>(new String[] { "Item_Name", "Item_Type", "Price" }));
+										new DefaultComboBoxModel<>(new String[] { "Show All","Item_Name", "Item_Type", "Price" }));
 								comboBox_2.setBounds(203, 47, 81, 22);
 								Item.add(comboBox_2);
 
@@ -312,6 +333,45 @@ public class Wister extends JFrame {
 								JButton btnNewButton_2 = new JButton("SEARCH");
 								btnNewButton_2.setBounds(525, 45, 115, 23);
 								Item.add(btnNewButton_2);
+
+                                btnNewButton_2.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent E){
+										try{
+                                      java.sql.Statement stm =con.createStatement();
+									  ResultSet resultSet;
+									  if(comboBox_2.getSelectedItem().equals("Show All"))
+                                        resultSet=stm.executeQuery(
+											"SELECT *"+
+											" FROM ITEM "
+										);
+										else if(comboBox_2.getSelectedItem().equals("Price")){
+											double num = Double.parseDouble(textField_2.getText());
+										       resultSet= stm.executeQuery(
+												"SELECT * "+
+												"FROM ITEM "+
+												"WHERE Price="+num
+											   );
+										}
+										else
+										 resultSet=stm.executeQuery(
+											"SELECT * "+
+											"FROM ITEM "+
+											" WHERE "+comboBox_2.getSelectedItem()+"= \'"+textField_2.getText()+"\'"
+										 );
+
+										imodel.setRowCount(0);
+										fillITable(imodel, resultSet);
+										
+									}
+									catch(NumberFormatException e){
+										JOptionPane.showMessageDialog(null, "Please Enter a number!", "invalid input", JOptionPane.ERROR_MESSAGE);
+
+									}
+								    catch(SQLException e){
+										System.out.println(e.getMessage());
+									}
+								}
+								});								
                                 
 								managerSearch.getContentPane().add(tabbedPane);
 								managerSearch.setVisible(true);
@@ -582,7 +642,6 @@ public class Wister extends JFrame {
 								labal_2.setBounds(134, 32, 181, 32);
 								Employee.add(labal_2);
 
-								// set up tab Employee (remove) until line 93
 								JComboBox<String> comboBox = new JComboBox<String>();
 								comboBox.setModel(
 										new DefaultComboBoxModel<String>(new String[] { " Employee_ID", "Emp_Name",
@@ -1312,4 +1371,30 @@ public class Wister extends JFrame {
 			System.out.println("ERRORRRR SQLLL! " + exception.getMessage());
 		}
 	}
-}
+
+    static void fillETable(DefaultTableModel model, ResultSet resultSet)throws SQLException{
+
+		while (resultSet.next()){
+			model.addRow(new Object[] {resultSet.getInt("Employee_ID"),resultSet.getInt("Bcode"),resultSet.getString("Emp_Name"), resultSet.getString("Residence_Number"), resultSet.getString("Emp_Phone"),
+		    resultSet.getString("Gender"), resultSet.getString("Role"),resultSet.getString("Neighborhood") , resultSet.getString("Street"),resultSet.getString("Post_Code"), resultSet.getDouble("Salary")});
+
+		}
+
+	}
+
+	static void fillBTable(DefaultTableModel model, ResultSet resultSet)throws SQLException{
+
+		while (resultSet.next()){
+			model.addRow(new Object[] {resultSet.getInt("Branch_code"),new SimpleDateFormat("HH:mm:ss").format(resultSet.getTime("Work_time")),resultSet.getString("City"), resultSet.getString("Neighborhood"), resultSet.getString("Street")});
+		}
+		}
+
+		static void fillITable(DefaultTableModel model, ResultSet resultSet)throws SQLException{
+
+			while (resultSet.next()){
+				model.addRow(new Object[] {resultSet.getString("Item_Name"),resultSet.getDouble("Price"),resultSet.getString("Item_Type"), resultSet.getInt("Calories")});
+			}
+			}
+	
+	}
+
