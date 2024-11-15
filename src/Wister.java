@@ -750,6 +750,7 @@ public class Wister extends JFrame {
 								managerAdd.setTitle("Add");
 								managerAdd.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 								managerAdd.setBounds(100, 100, 550, 400);
+								managerAdd.setLocationRelativeTo(null);
 								managerAdd.getContentPane().setLayout(new BorderLayout());
 
 								JTabbedPane tabbedPane = new JTabbedPane();
