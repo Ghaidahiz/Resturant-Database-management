@@ -145,8 +145,6 @@ public class Wister extends JFrame {
 
 								JTabbedPane tabbedPane = new JTabbedPane();
 
-								getContentPane().add(tabbedPane);
-
 								JPanel Employee = new JPanel();
 								Employee.setLayout(null);
 								tabbedPane.addTab("Employee", Employee);
@@ -183,7 +181,7 @@ public class Wister extends JFrame {
 								btnNewButton.setBounds(607, 43, 102, 23);
 								Employee.add(btnNewButton);
 
-								Object[][] data = {}; // ************** LOOK HERE RENAD
+								Object[][] data = {}; 
 								DefaultTableModel emodel = new DefaultTableModel(data,
 										new String[] { "ID", "Branch_Code", "Name", "Residence_Number", "Phone",
 												"Gender", "Role", "Neighborhood", "Street", "Post_Code", "Salary" });
@@ -371,7 +369,6 @@ public class Wister extends JFrame {
 										}
 									}
 								});
-
 								managerSearch.getContentPane().add(tabbedPane);
 								managerSearch.setVisible(true);
 
@@ -535,7 +532,12 @@ public class Wister extends JFrame {
 																+ textField_6.getText() + ") was updated to be: "
 																+ textField.getText(),
 														"Updated seccessfully :)", JOptionPane.INFORMATION_MESSAGE);*/
-
+                                            else{java.sql.Statement stm2= con.createStatement();
+												ResultSet resultSet= stm2.executeQuery(
+													"SELECT * "+ "FROM EMPLOYEE "
+													);
+												emodel.setRowCount(0);
+												fillETable(emodel, resultSet);}
 										} catch (NumberFormatException e) {
 											JOptionPane.showMessageDialog(null, "please enter a number!", "Input Error",
 													JOptionPane.WARNING_MESSAGE);
@@ -548,17 +550,7 @@ public class Wister extends JFrame {
 											System.out.println(e.getMessage());
 										}
 
-										try{
-											java.sql.Statement stm= con.createStatement();
-											ResultSet resultSet= stm.executeQuery(
-												"SELECT * "+ "FROM EMPLOYEE "
-												);
-										    emodel.setRowCount(0);
-											fillETable(emodel, resultSet);
-											}
-											catch(SQLException ex){
-												System.out.println(ex.getMessage());
-											}
+										
 									}
 								});
 
@@ -732,40 +724,115 @@ public class Wister extends JFrame {
 								// Create panels to add to each tab
 								JPanel Employee = new JPanel();
 								Employee.setLayout(null);
-
+								
 								JPanel Branch = new JPanel();
 								Branch.setLayout(null);
-
+						
 								JPanel Item = new JPanel();
 								Item.setLayout(null);
-								JLabel label_1 = new JLabel("enter name of the item you want to remove:   ");
-								label_1.setBounds(10, 59, 273, 20);
-								Item.add(label_1);
+								
+						
+								 Object[][] data = {};                  // ************** LOOK HERE RENAD
+								DefaultTableModel emodel = new DefaultTableModel(data,new String[] { "ID", "Branch_Code", "Name", "Residence_Number", "Phone","Gender", "Role", "Neighborhood", "Street", "Post_Code", "Salary" });
+								DefaultTableModel bmodel = new DefaultTableModel(data,new String[] { "Branch_code", "Work_time", "City", "Neighborhood", "Street" });
+								DefaultTableModel imodel = new DefaultTableModel(data,new String[] { "Item_Name", "Price", "Item_Type", "Calories" });
+								JTable etable = new JTable(emodel);
+								JTable btable = new JTable(bmodel);
+								JTable itable = new JTable(imodel);
+						
+								etable.setEnabled(false);
+								btable.setEnabled(false);
+								itable.setEnabled(false);
+						
+								JScrollPane escrollPane = new JScrollPane(etable);
+								JScrollPane bscrollPane = new JScrollPane(btable);
+								JScrollPane iscrollPane = new JScrollPane(itable);
+						
+								escrollPane.setBounds(5, 120, 800, 200);
+								bscrollPane.setBounds(169, 124, 500, 200);
+								iscrollPane.setBounds(140, 124, 500, 200);
+						
+								Employee.add(escrollPane);
+								Branch.add(bscrollPane);
+								Item.add(iscrollPane);
+						
+								etable.getColumnModel().getColumn(0).setPreferredWidth(30);
+								etable.getColumnModel().getColumn(1).setPreferredWidth(80);
+								etable.getColumnModel().getColumn(2).setPreferredWidth(50);
+								etable.getColumnModel().getColumn(5).setPreferredWidth(40);
+								etable.getColumnModel().getColumn(6).setPreferredWidth(50);
+								etable.getColumnModel().getColumn(10).setPreferredWidth(40);
+								etable.getColumnModel().getColumn(3).setPreferredWidth(90);
+								etable.getColumnModel().getColumn(4).setPreferredWidth(65);
+								etable.getColumnModel().getColumn(8).setPreferredWidth(50);
+								
+								tabbedPane.addTab("Employee",Employee);
+								 tabbedPane.addTab("Branch",Branch);
+								 tabbedPane.addTab("Item",Item);
 
-								// Add panels as tabs to the JTabbedPane
-								JLabel labal_2 = new JLabel("remove employees by thier:");
-								labal_2.setHorizontalAlignment(SwingConstants.CENTER);
+								 try{
+									java.sql.Statement stm= con.createStatement();
+									ResultSet resultSet= stm.executeQuery(
+										"SELECT * "+ "FROM EMPLOYEE "
+										);
+									fillETable(emodel, resultSet);
+									}
+									catch(SQLException ex){
+										System.out.println(ex.getMessage());
+									}
+
+									try{
+										java.sql.Statement stm= con.createStatement();
+										ResultSet resultSet= stm.executeQuery(
+											"SELECT * "+ "FROM BRANCH "
+											);
+										fillBTable(bmodel, resultSet);
+										}
+										catch(SQLException ex){
+											System.out.println(ex.getMessage());
+										}
+
+										try{
+											java.sql.Statement stm= con.createStatement();
+											ResultSet resultSet= stm.executeQuery(
+												"SELECT * "+ "FROM ITEM "
+												);
+											fillITable(imodel, resultSet);
+											}
+											catch(SQLException ex){
+												System.out.println(ex.getMessage());
+											}
+
+								
+								JLabel lblEnterNameOf = new JLabel("Enter name of the item you want to remove:   ");
+								lblEnterNameOf.setBounds(96, 59, 273, 20);
+								Item.add(lblEnterNameOf);
+						
+								// Add panels as tabs to the JTabbedPane        
+								JLabel labal_2 = new JLabel("Remove employees by thier:");
+								labal_2.setHorizontalAlignment(SwingConstants.LEFT);
 								labal_2.setBounds(134, 32, 181, 32);
 								Employee.add(labal_2);
-
+								
+								// set up tab Employee (remove) until line 93
 								JComboBox<String> comboBox = new JComboBox<String>();
-								comboBox.setModel(new DefaultComboBoxModel<String>(
-										new String[] { " Employee_ID", "Emp_Name", "Gender", "Role", "Salary" }));
+								comboBox.setModel(new DefaultComboBoxModel(new String[] {" Employee_ID", "Emp_Name", "Gender", "Role", "Salary"}));
 								comboBox.setBounds(325, 38, 96, 20);
 								Employee.add(comboBox);
-
+								
 								JTextField textField = new JTextField();
-								textField.setBounds(325, 79, 96, 20);
+								textField.setBounds(325, 75, 96, 20);
 								Employee.add(textField);
 								textField.setColumns(10);
-
-								JLabel lblNewLabel = new JLabel("enter a value to remove all employees that match:");
-								lblNewLabel.setBounds(10, 79, 305, 20);
+							   
+								JLabel lblNewLabel = new JLabel("Enter a value to remove all employees that match:");
+								lblNewLabel.setBounds(10, 75, 305, 20);
 								Employee.add(lblNewLabel);
-
+								
 								JButton button = new JButton("Remove");
-								button.setBounds(332, 139, 89, 23);
+								button.setBounds(496, 37, 89, 23);
 								Employee.add(button);
+						
 
 								button.addActionListener(new ActionListener() {
 									@Override
@@ -790,11 +857,17 @@ public class Wister extends JFrame {
 												JOptionPane.showMessageDialog(null,
 														"There is no Empolyee with the received value", "not found :(",
 														JOptionPane.ERROR_MESSAGE);
-											else
-												JOptionPane.showMessageDialog(null,
+											else{
+											java.sql.Statement stm2= con.createStatement();
+											ResultSet resultSet= stm2.executeQuery(
+												"SELECT * "+ "FROM EMPLOYEE "
+												);
+											emodel.setRowCount(0);
+											fillETable(emodel, resultSet);}
+												/*JOptionPane.showMessageDialog(null,
 														"All Empolyees with \'" + comboBox.getSelectedItem() + " = "
 																+ textField.getText() + "\' are Removed seccessfully ",
-														"Removed seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
+														"Removed seccessfully :)", JOptionPane.INFORMATION_MESSAGE); */
 
 										} catch (NumberFormatException E) {
 											JOptionPane.showMessageDialog(null, "please enter a number", "Input Error",
@@ -805,18 +878,17 @@ public class Wister extends JFrame {
 									}
 								});
 
-								JLabel lblNewLabel_2 = new JLabel(
-										"enter the code of the Branch \r\nyou want to remove:");
-								lblNewLabel_2.setBounds(10, 36, 305, 31);
+								JLabel lblNewLabel_2 = new JLabel("Enter the code of the Branch \r\nyou want to remove:");
+								lblNewLabel_2.setBounds(98, 36, 305, 31);
 								Branch.add(lblNewLabel_2);
-
+								
 								JTextField textField_1 = new JTextField();
-								textField_1.setBounds(325, 41, 96, 20);
+								textField_1.setBounds(401, 41, 96, 20);
 								Branch.add(textField_1);
 								textField_1.setColumns(10);
-
+								
 								JButton Button_1 = new JButton("Remove");
-								Button_1.setBounds(325, 72, 96, 23);
+								Button_1.setBounds(530, 40, 96, 23);
 								Branch.add(Button_1);
 
 								Button_1.addActionListener(new ActionListener() {
@@ -835,11 +907,17 @@ public class Wister extends JFrame {
 												JOptionPane.showMessageDialog(null,
 														"There is no Branch with the recived Branch_code",
 														"not found :(", JOptionPane.ERROR_MESSAGE);
-											else
-												JOptionPane.showMessageDialog(null,
+											else{
+												java.sql.Statement stm2= con.createStatement();
+												ResultSet resultSet= stm2.executeQuery(
+													"SELECT * "+ "FROM BRANCH "
+													);
+												bmodel.setRowCount(0);
+												fillBTable(bmodel, resultSet);}
+												/*JOptionPane.showMessageDialog(null,
 														"The Branch (with Branch_code = " + textField_1.getText()
 																+ ") is removed seccessfully.",
-														"Removed seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
+														"Removed seccessfully :)", JOptionPane.INFORMATION_MESSAGE);*/
 										} catch (NumberFormatException ex) {
 											JOptionPane.showMessageDialog(null, "please enter a number", "Input Error",
 													JOptionPane.WARNING_MESSAGE);
@@ -860,14 +938,13 @@ public class Wister extends JFrame {
 									}
 
 								});
-
 								JTextField textField_2 = new JTextField();
-								textField_2.setBounds(293, 59, 96, 20);
+								textField_2.setBounds(361, 59, 96, 20);
 								Item.add(textField_2);
 								textField_2.setColumns(10);
-
+								
 								JButton btnNewButton = new JButton("Remove");
-								btnNewButton.setBounds(290, 96, 99, 23);
+								btnNewButton.setBounds(518, 58, 99, 23);
 								Item.add(btnNewButton);
 
 								btnNewButton.addActionListener(new ActionListener() {
@@ -880,11 +957,18 @@ public class Wister extends JFrame {
 												JOptionPane.showMessageDialog(null,
 														"There is no item with the received name!", "not found :(",
 														JOptionPane.ERROR_MESSAGE);
-											else
-												JOptionPane.showMessageDialog(null,
+											else{
+												java.sql.Statement stm2= con.createStatement();
+												ResultSet resultSet= stm2.executeQuery(
+													"SELECT * "+ "FROM EMPLOYEE "
+													);
+												imodel.setRowCount(0);
+												fillITable(imodel, resultSet);
+											}
+												/*JOptionPane.showMessageDialog(null,
 														"The Item ( " + textField_2.getText()
 																+ " ) is removed seccessfully.",
-														"Removed Seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
+														"Removed Seccessfully :)", JOptionPane.INFORMATION_MESSAGE);*/
 
 										} catch (SQLException e) {
 											System.out.println(e.getMessage());
@@ -1208,21 +1292,18 @@ public class Wister extends JFrame {
 						JButton cashierSearch = new JButton("Search"); // TODO: RENAD
 						cashierSearch.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								App.cashierSearch();
 							}
 						});
 
 						JButton cashierUpdate = new JButton("Update");// TODO: RENAD
 						cashierUpdate.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								App.cashierUpdate();
 							}
 						});
 
 						JButton cashierRemove = new JButton("Remove");// TODO: RENAD
 						cashierRemove.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								App.removeCashier();
 							}
 						});
 
