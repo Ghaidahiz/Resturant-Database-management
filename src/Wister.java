@@ -162,7 +162,7 @@ public class Wister extends JFrame {
 								tabbedPane.addTab("Item", Item);
 
 								JComboBox<String> comboBox = new JComboBox<>();
-								comboBox.setModel(new DefaultComboBoxModel<>(new String[] { "Emp_ID", "Emp_Name",
+								comboBox.setModel(new DefaultComboBoxModel<>(new String[] {"Show All", "Emp_ID", "Emp_Name",
 										"Branch_code", "Role", "Gender", "Salary" }));
 								comboBox.setBounds(75, 43, 88, 22);
 								Employee.add(comboBox);
@@ -219,6 +219,41 @@ public class Wister extends JFrame {
 								etable.getColumnModel().getColumn(4).setPreferredWidth(65);
 								etable.getColumnModel().getColumn(8).setPreferredWidth(50);
 
+								btnNewButton.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent E){
+										try{
+											java.sql.Statement stm = con.createStatement();
+											ResultSet resultSet;
+											if(comboBox.getSelectedItem().equals("Show All"))
+											   resultSet=stm.executeQuery(
+												"SELECT * "+
+												"FROM EMPLOYEE ");
+										    else if(comboBox.getSelectedItem().equals("Emp_ID") || comboBox.getSelectedItem().equals("Branch_code") || comboBox.getSelectedItem().equals("Salary") ){
+											    int num = Integer.parseInt(textField.getText());
+												resultSet = stm.executeQuery(
+												"SELECT * "+
+												"FROM EMPLOYEE "+
+												"WHERE "+comboBox.getSelectedItem()+" = "+num
+												);}
+											else 
+											    resultSet= stm.executeQuery(
+													"SELECT * "+
+													"FROM EMPLOYEE "+
+													"WHERE "+comboBox.getSelectedItem()+"= \'"+textField.getText()+"\'"
+
+												);
+												
+
+										}
+										catch(NumberFormatException ex){
+											JOptionPane.showMessageDialog(null, "Please Enter a umber!", "invalid input", JOptionPane.ERROR_MESSAGE);
+										}
+										catch(SQLException ex){
+											System.out.println(ex.getMessage());
+										}
+									}
+								});
+
 								JLabel lblNewLabel_2 = new JLabel("search by:");
 								lblNewLabel_2.setBounds(155, 45, 69, 18);
 								Branch.add(lblNewLabel_2);
@@ -240,6 +275,16 @@ public class Wister extends JFrame {
 								JButton btnNewButton_1 = new JButton("SEARCH");
 								btnNewButton_1.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent e) {
+										try{
+											java.sql.Statement stm = con.createStatement();
+											ResultSet resultSet = stm.executeQuery(
+												"SELECT "
+												);
+
+										}
+										catch(SQLException ex){
+
+										}
 									}
 								});
 								btnNewButton_1.setBounds(552, 43, 88, 23);
