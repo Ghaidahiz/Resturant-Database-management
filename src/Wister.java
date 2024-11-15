@@ -135,8 +135,8 @@ public class Wister extends JFrame {
 						JButton managerSearchBtn = new JButton("Search"); // TODO: EMAN
 						managerSearchBtn.addActionListener(new ActionListener() { // 'SEARCH' manager veiw
 							public void actionPerformed(ActionEvent e) {
-                                
-								JFrame managerSearch =new JFrame();
+
+								JFrame managerSearch = new JFrame();
 								managerSearch.setTitle("SEARCH");
 								managerSearch.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 								managerSearch.setBounds(100, 100, 830, 400);
@@ -333,45 +333,6 @@ public class Wister extends JFrame {
 								JButton btnNewButton_2 = new JButton("SEARCH");
 								btnNewButton_2.setBounds(525, 45, 115, 23);
 								Item.add(btnNewButton_2);
-
-                                btnNewButton_2.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent E){
-										try{
-                                      java.sql.Statement stm =con.createStatement();
-									  ResultSet resultSet;
-									  if(comboBox_2.getSelectedItem().equals("Show All"))
-                                        resultSet=stm.executeQuery(
-											"SELECT *"+
-											" FROM ITEM "
-										);
-										else if(comboBox_2.getSelectedItem().equals("Price")){
-											double num = Double.parseDouble(textField_2.getText());
-										       resultSet= stm.executeQuery(
-												"SELECT * "+
-												"FROM ITEM "+
-												"WHERE Price="+num
-											   );
-										}
-										else
-										 resultSet=stm.executeQuery(
-											"SELECT * "+
-											"FROM ITEM "+
-											" WHERE "+comboBox_2.getSelectedItem()+"= \'"+textField_2.getText()+"\'"
-										 );
-
-										imodel.setRowCount(0);
-										fillITable(imodel, resultSet);
-										
-									}
-									catch(NumberFormatException e){
-										JOptionPane.showMessageDialog(null, "Please Enter a number!", "invalid input", JOptionPane.ERROR_MESSAGE);
-
-									}
-								    catch(SQLException e){
-										System.out.println(e.getMessage());
-									}
-								}
-								});								
                                 
 								managerSearch.getContentPane().add(tabbedPane);
 								managerSearch.setVisible(true);
@@ -443,10 +404,9 @@ public class Wister extends JFrame {
 														+ " WHERE Employee_ID=" + textField_6.getText());
 											else {
 												int num = Integer.parseInt(textField_6.getText());
-												numOfAffectedRow = stm.executeUpdate(
-														"UPDATE EMPLOYEE " +
-																"SET Salary = " + textField.getText() +
-																" WHERE Employee_ID=" + num);
+												numOfAffectedRow = stm
+														.executeUpdate("UPDATE EMPLOYEE " + "SET Salary = "
+																+ textField.getText() + " WHERE Employee_ID=" + num);
 											}
 
 											if (numOfAffectedRow == 0)
@@ -517,17 +477,14 @@ public class Wister extends JFrame {
 
 										try {
 											java.sql.Statement stm = con.createStatement();
-											numOfAffectedRow = stm.executeUpdate(
-													"UPDATE BRANCH " +
-															"SET Work_time= \'" + comboBox.getSelectedItem() + ":"
-															+ comboBox_2.getSelectedItem() + ":00\' " +
-															"WHERE Branch_code = " + textField_1.getText());
+											numOfAffectedRow = stm.executeUpdate("UPDATE BRANCH " + "SET Work_time= \'"
+													+ comboBox.getSelectedItem() + ":" + comboBox_2.getSelectedItem()
+													+ ":00\' " + "WHERE Branch_code = " + textField_1.getText());
 											if (numOfAffectedRow == 1)
 												JOptionPane.showMessageDialog(null,
 														"The working time of the branch(" + textField_1.getText()
-																+ ") was updated to be: " +
-																comboBox.getSelectedItem() + ":"
-																+ comboBox_2.getSelectedItem() + ":00",
+																+ ") was updated to be: " + comboBox.getSelectedItem()
+																+ ":" + comboBox_2.getSelectedItem() + ":00",
 														"Updated seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
 											else if (numOfAffectedRow == 0) {
 												JOptionPane.showMessageDialog(null,
@@ -581,10 +538,8 @@ public class Wister extends JFrame {
 										try {
 											java.sql.Statement stm = con.createStatement();
 											int price = Integer.parseInt(textField_5.getText());
-											numOfAffectedRow = stm.executeUpdate(
-													"UPDATE ITEM " +
-															"SET Price=" + price +
-															" WHERE Item_Name= \'" + textField_4.getText() + "\'");
+											numOfAffectedRow = stm.executeUpdate("UPDATE ITEM " + "SET Price=" + price
+													+ " WHERE Item_Name= \'" + textField_4.getText() + "\'");
 											if (numOfAffectedRow == 0)
 												JOptionPane.showMessageDialog(null,
 														"There is no Item with the received Name!", "not found :(",
@@ -643,9 +598,8 @@ public class Wister extends JFrame {
 								Employee.add(labal_2);
 
 								JComboBox<String> comboBox = new JComboBox<String>();
-								comboBox.setModel(
-										new DefaultComboBoxModel<String>(new String[] { " Employee_ID", "Emp_Name",
-												"Gender", "Role", "Salary" }));
+								comboBox.setModel(new DefaultComboBoxModel<String>(
+										new String[] { " Employee_ID", "Emp_Name", "Gender", "Role", "Salary" }));
 								comboBox.setBounds(325, 38, 96, 20);
 								Employee.add(comboBox);
 
@@ -757,7 +711,9 @@ public class Wister extends JFrame {
 								});
 
 								JTextArea txtrEman = new JTextArea();
-								txtrEman.setText("eman\r\nameen\r\nf\r\nf\r\nf\r\nf\r\nd\r\nd\r\nd\r\nd\r\n");//TODO: for testing
+								txtrEman.setText("eman\r\nameen\r\nf\r\nf\r\nf\r\nf\r\nd\r\nd\r\nd\r\nd\r\n");// TODO:
+																												// for
+																												// testing
 								txtrEman.setBounds(10, 130, 411, 94);
 								Branch.add(txtrEman);
 
@@ -826,376 +782,236 @@ public class Wister extends JFrame {
 
 								// Add panels as tabs to the JTabbedPane
 								tabbedPane.addTab("Employee", Employee);
-								JLabel lblNewLabel = new JLabel("Employee ID:");
-
-								JTextField empId = new JTextField();
-								empId.setColumns(10);
-
-								JLabel emp_name = new JLabel("Name:");
-
-								JTextField empName = new JTextField();
-								empName.setColumns(10);
-
-								JLabel lblResidenceNumber = new JLabel("Residence Number:");
-
-								JTextField textField = new JTextField();
-								textField.setColumns(10);
-
-								JLabel lblPhoneNumber = new JLabel("Phone Number:");
-
-								JTextField textField_1 = new JTextField();
-								textField_1.setColumns(10);
-
-								JLabel lblNewLabel_3 = new JLabel("Neighborhood:");
-
-								JTextField textField_2 = new JTextField();
-								textField_2.setColumns(10);
+								ButtonGroup group = new ButtonGroup();
+								Employee.setLayout(null);
 
 								JLabel lblNewLabel_1 = new JLabel("Enter the new employee's info:");
+								lblNewLabel_1.setBounds(168, 14, 192, 16);
+								Employee.add(lblNewLabel_1);
 
-								JLabel lblNewLabel_3_1 = new JLabel("Street:");
+								JLabel lblNewLabel = new JLabel("Employee ID:");
+								lblNewLabel.setBounds(54, 47, 82, 16);
+								Employee.add(lblNewLabel);
 
-								JTextField textField_3 = new JTextField();
-								textField_3.setColumns(10);
-
-								JTextField textField_4 = new JTextField();
-								textField_4.setColumns(10);
-
-								JLabel lblNewLabel_3_1_1 = new JLabel("Post Code:");
+								JLabel emp_name = new JLabel("Name:");
+								emp_name.setBounds(96, 75, 40, 16);
+								Employee.add(emp_name);
 
 								JLabel lblNewLabel_3_1_1_1 = new JLabel("Branch:");
+								lblNewLabel_3_1_1_1.setBounds(317, 78, 46, 16);
+								Employee.add(lblNewLabel_3_1_1_1);
 
-								JLabel lblNewLabel_3_1_1_1_1 = new JLabel("Gender:");
-
-								JRadioButton rdbtnMale = new JRadioButton("Male");
-
-								JRadioButton rdbtnFemale = new JRadioButton("Female");
-								ButtonGroup group = new ButtonGroup();
-								group.add(rdbtnMale);
-								group.add(rdbtnFemale);
-
-								JLabel lblNewLabel_3_1_1_1_1_1 = new JLabel("Role:");
-
-								JComboBox<String> comboBox_1 = new JComboBox<String>();
-								comboBox_1.setModel(
-										new DefaultComboBoxModel<String>(new String[] { "Chef", "Cashier", "Server" }));
-
-								JButton btnNewButton = new JButton("Add");
-								btnNewButton.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-									}
-								});
+								JComboBox comboBox_1_1 = new JComboBox();
+								comboBox_1_1.setBounds(368, 71, 89, 27);
+								comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] { "Hi", "Hello", "Test" })); // TODO:
+																															// fix
+								Employee.add(comboBox_1_1);
 
 								JLabel lblNewLabel_3_1_1_2 = new JLabel("Salary:");
+								lblNewLabel_3_1_1_2.setBounds(96, 103, 41, 16);
+								Employee.add(lblNewLabel_3_1_1_2);
 
-								JTextField textField_5 = new JTextField();
-								textField_5.setColumns(10);
+								JLabel lblNewLabel_3_1_1_1_1 = new JLabel("Gender:");
+								lblNewLabel_3_1_1_1_1.setBounds(312, 106, 48, 16);
+								Employee.add(lblNewLabel_3_1_1_1_1);
 
-								JComboBox<String> comboBox_1_1 = new JComboBox<String>(); // TODO: FIXXXX
-								comboBox_1_1.setModel(
-										new DefaultComboBoxModel<String>(new String[] { "Hi", "Hello", "Test" }));
-								GroupLayout gl_Employee = new GroupLayout(Employee);
-								gl_Employee.setHorizontalGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_Employee.createSequentialGroup().addGap(166).addComponent(
-												lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 196,
-												GroupLayout.PREFERRED_SIZE))
-										.addGroup(
-												gl_Employee.createSequentialGroup().addGap(40).addComponent(lblNewLabel)
-														.addComponent(empId, GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addGroup(
-												gl_Employee.createSequentialGroup().addGap(82).addComponent(emp_name)
-														.addComponent(empName, GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-														.addGap(46)
-														.addComponent(lblNewLabel_3_1_1_1, GroupLayout.PREFERRED_SIZE,
-																54, GroupLayout.PREFERRED_SIZE)
-														.addGap(5).addComponent(comboBox_1_1,
-																GroupLayout.PREFERRED_SIZE, 119,
-																GroupLayout.PREFERRED_SIZE))
-										.addGroup(gl_Employee.createSequentialGroup().addGap(80).addGroup(gl_Employee
-												.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblNewLabel_3_1_1_2, GroupLayout.PREFERRED_SIZE, 45,
-														GroupLayout.PREFERRED_SIZE)
-												.addGroup(gl_Employee.createSequentialGroup().addGap(42).addComponent(
-														textField_5, GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-												.addGap(46)
-												.addComponent(lblNewLabel_3_1_1_1_1, GroupLayout.PREFERRED_SIZE, 54,
-														GroupLayout.PREFERRED_SIZE)
-												.addGap(5)
-												.addComponent(rdbtnMale, GroupLayout.PREFERRED_SIZE, 67,
-														GroupLayout.PREFERRED_SIZE)
-												.addGap(12).addComponent(rdbtnFemale, GroupLayout.PREFERRED_SIZE, 94,
-														GroupLayout.PREFERRED_SIZE))
-										.addGroup(gl_Employee.createSequentialGroup().addGroup(gl_Employee
-												.createParallelGroup(Alignment.TRAILING)
-												.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
-														.addComponent(lblResidenceNumber, GroupLayout.PREFERRED_SIZE,
-																125, GroupLayout.PREFERRED_SIZE)
-														.addGroup(gl_Employee.createSequentialGroup().addGap(122)
-																.addComponent(textField, GroupLayout.PREFERRED_SIZE,
-																		GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE)))
-												.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
-														.addGroup(gl_Employee.createSequentialGroup()
-																.addComponent(lblPhoneNumber,
-																		GroupLayout.PREFERRED_SIZE, 98,
-																		GroupLayout.PREFERRED_SIZE)
-																.addComponent(textField_1, GroupLayout.PREFERRED_SIZE,
-																		GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE))
-														.addGroup(gl_Employee.createSequentialGroup()
-																.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE,
-																		98, GroupLayout.PREFERRED_SIZE)
-																.addComponent(textField_2, GroupLayout.PREFERRED_SIZE,
-																		GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE))))
-												.addGap(27)
-												.addGroup(gl_Employee.createParallelGroup(Alignment.TRAILING)
-														.addGroup(gl_Employee.createSequentialGroup()
-																.addComponent(lblNewLabel_3_1_1_1_1_1).addGap(18)
-																.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE,
-																		119, GroupLayout.PREFERRED_SIZE))
-														.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
-																.addGroup(gl_Employee.createSequentialGroup().addGap(27)
-																		.addGroup(gl_Employee
-																				.createParallelGroup(Alignment.LEADING)
-																				.addComponent(lblNewLabel_3_1,
-																						GroupLayout.PREFERRED_SIZE, 45,
-																						GroupLayout.PREFERRED_SIZE)
-																				.addGroup(gl_Employee
-																						.createSequentialGroup()
-																						.addGap(40)
-																						.addComponent(textField_3,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE))))
-																.addGroup(gl_Employee.createSequentialGroup()
-																		.addComponent(lblNewLabel_3_1_1).addComponent(
-																				textField_4, GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)))))
-										.addGroup(Alignment.TRAILING,
-												gl_Employee.createSequentialGroup()
-														.addContainerGap(229, Short.MAX_VALUE)
-														.addComponent(btnNewButton).addGap(226)));
-								gl_Employee.setVerticalGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_Employee.createSequentialGroup().addGap(31)
-												.addComponent(lblNewLabel_1).addGap(6)
-												.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
-														.addGroup(gl_Employee.createSequentialGroup().addGap(5)
-																.addComponent(lblNewLabel))
-														.addComponent(empId, GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-												.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
-														.addGroup(gl_Employee.createSequentialGroup().addGap(11)
-																.addComponent(emp_name))
-														.addGroup(gl_Employee.createSequentialGroup().addGap(6)
-																.addComponent(empName, GroupLayout.PREFERRED_SIZE,
-																		GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE))
-														.addGroup(gl_Employee.createSequentialGroup().addGap(4)
-																.addComponent(lblNewLabel_3_1_1_1))
-														.addComponent(comboBox_1_1, GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-												.addGap(2)
-												.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING)
-														.addGroup(gl_Employee.createSequentialGroup().addGap(3)
-																.addGroup(gl_Employee
-																		.createParallelGroup(Alignment.LEADING)
-																		.addGroup(gl_Employee.createSequentialGroup()
-																				.addGap(4)
-																				.addComponent(lblNewLabel_3_1_1_2))
-																		.addComponent(textField_5,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)))
-														.addGroup(gl_Employee.createSequentialGroup().addGap(3)
-																.addComponent(lblNewLabel_3_1_1_1_1))
-														.addComponent(rdbtnMale).addComponent(rdbtnFemale))
-												.addGap(1)
-												.addGroup(gl_Employee.createParallelGroup(Alignment.LEADING).addGroup(
-														gl_Employee.createSequentialGroup().addGroup(gl_Employee
-																.createParallelGroup(Alignment.LEADING)
-																.addGroup(gl_Employee.createSequentialGroup().addGap(5)
-																		.addComponent(lblResidenceNumber))
-																.addComponent(textField, GroupLayout.PREFERRED_SIZE,
-																		GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE))
-																.addPreferredGap(ComponentPlacement.RELATED)
-																.addGroup(gl_Employee
-																		.createParallelGroup(Alignment.LEADING)
-																		.addGroup(gl_Employee.createSequentialGroup()
-																				.addGap(5).addComponent(lblPhoneNumber))
-																		.addComponent(textField_1,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE))
-																.addGap(2)
-																.addGroup(gl_Employee
-																		.createParallelGroup(Alignment.LEADING)
-																		.addGroup(gl_Employee.createSequentialGroup()
-																				.addGap(5).addComponent(lblNewLabel_3))
-																		.addComponent(textField_2,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)))
-														.addGroup(gl_Employee.createSequentialGroup().addGap(5)
-																.addGroup(gl_Employee
-																		.createParallelGroup(Alignment.LEADING)
-																		.addComponent(lblNewLabel_3_1_1_1_1_1)
-																		.addComponent(comboBox_1,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE))
-																.addPreferredGap(ComponentPlacement.UNRELATED)
-																.addGroup(gl_Employee
-																		.createParallelGroup(Alignment.LEADING)
-																		.addGroup(gl_Employee.createSequentialGroup()
-																				.addGap(5)
-																				.addComponent(lblNewLabel_3_1))
-																		.addComponent(textField_3,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE))
-																.addGap(2)
-																.addGroup(gl_Employee
-																		.createParallelGroup(Alignment.LEADING)
-																		.addGroup(gl_Employee.createSequentialGroup()
-																				.addGap(10)
-																				.addComponent(lblNewLabel_3_1_1))
-																		.addGroup(gl_Employee.createSequentialGroup()
-																				.addGap(5).addComponent(textField_4,
-																						GroupLayout.PREFERRED_SIZE,
-																						GroupLayout.DEFAULT_SIZE,
-																						GroupLayout.PREFERRED_SIZE)))))
-												.addGap(28).addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 40,
-														GroupLayout.PREFERRED_SIZE)
-												.addGap(42)));
-								Employee.setLayout(gl_Employee);
+								JRadioButton rdbtnMale = new JRadioButton("Male");
+								rdbtnMale.setBounds(368, 103, 62, 23);
+								group.add(rdbtnMale);
+								Employee.add(rdbtnMale);
 
-								tabbedPane.addTab("Branch", Branch); // TODO: here is branch
-								GridBagLayout gbl_Branch = new GridBagLayout();
-								gbl_Branch.columnWidths = new int[] { 31, 80, 130, 29, 60, 130, 0 };
-								gbl_Branch.rowHeights = new int[] { 38, 16, 69, 26, 26, 26, 49, 40, 0 };
-								gbl_Branch.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-										Double.MIN_VALUE };
-								gbl_Branch.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-										Double.MIN_VALUE };
-								Branch.setLayout(gbl_Branch);
+								JRadioButton rdbtnFemale = new JRadioButton("Female");
+								rdbtnFemale.setBounds(435, 103, 94, 23);
+								group.add(rdbtnFemale);
+								Employee.add(rdbtnFemale);
+
+								JLabel lblResidenceNumber = new JLabel("Residence Number:");
+								lblResidenceNumber.setBounds(15, 129, 121, 16);
+								Employee.add(lblResidenceNumber);
+
+								JLabel lblNewLabel_3_1_1_1_1_1 = new JLabel("Role:");
+								lblNewLabel_3_1_1_1_1_1.setBounds(322, 140, 31, 16);
+								Employee.add(lblNewLabel_3_1_1_1_1_1);
+
+								JComboBox comboBox_1 = new JComboBox();
+								comboBox_1.setBounds(368, 134, 103, 27);
+								comboBox_1.setModel(
+										new DefaultComboBoxModel(new String[] { "Chef", "Cashier", "Server" }));
+								Employee.add(comboBox_1);
+
+								JLabel lblPhoneNumber = new JLabel("Phone Number:");
+								lblPhoneNumber.setBounds(40, 155, 96, 16);
+								Employee.add(lblPhoneNumber);
+
+								JLabel lblNewLabel_3_1 = new JLabel("Street:");
+								lblNewLabel_3_1.setBounds(317, 173, 40, 16);
+								Employee.add(lblNewLabel_3_1);
+
+								JLabel lblNewLabel_3 = new JLabel("Neighborhood:");
+								lblNewLabel_3.setBounds(42, 183, 94, 16);
+								Employee.add(lblNewLabel_3);
+
+								JLabel lblNewLabel_3_1_1 = new JLabel("Post Code:");
+								lblNewLabel_3_1_1.setBounds(290, 201, 67, 16);
+								Employee.add(lblNewLabel_3_1_1);
+
+								JButton btnNewButton = new JButton("Add");
+								btnNewButton.setBounds(227, 257, 75, 40);
+								btnNewButton.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {// add employee
+									}
+								});
+								Employee.add(btnNewButton);
+
+								JTextField textField_14 = new JTextField();
+								textField_14.setBounds(368, 196, 130, 26);
+								textField_14.setColumns(10);
+								Employee.add(textField_14);
+
+								JTextField textField_15 = new JTextField();
+								textField_15.setBounds(368, 168, 130, 26);
+								textField_15.setColumns(10);
+								Employee.add(textField_15);
+
+								JTextField textField = new JTextField();
+								textField.setBounds(143, 42, 130, 26);
+								textField.setColumns(10);
+								Employee.add(textField);
+
+								JTextField textField_1 = new JTextField();
+								textField_1.setBounds(143, 70, 130, 26);
+								textField_1.setColumns(10);
+								Employee.add(textField_1);
+
+								JTextField textField_2 = new JTextField();
+								textField_2.setBounds(143, 96, 130, 26);
+								textField_2.setColumns(10);
+								Employee.add(textField_2);
+
+								JTextField textField_3 = new JTextField();
+								textField_3.setBounds(143, 124, 130, 26);
+								textField_3.setColumns(10);
+								Employee.add(textField_3);
+
+								JTextField textField_16 = new JTextField();
+								textField_16.setBounds(143, 178, 130, 26);
+								textField_16.setColumns(10);
+								Employee.add(textField_16);
+
+								JTextField textField_17 = new JTextField();
+								textField_17.setBounds(143, 150, 130, 26);
+								textField_17.setColumns(10);
+								Employee.add(textField_17);
+								tabbedPane.addTab("Branch", Branch);
+								Branch.setLayout(null);
 
 								JLabel lblNewLabel_1_1 = new JLabel("Enter the new branch info:");
-								GridBagConstraints gbc_lblNewLabel_1_1 = new GridBagConstraints();
-								gbc_lblNewLabel_1_1.anchor = GridBagConstraints.NORTHEAST;
-								gbc_lblNewLabel_1_1.insets = new Insets(0, 0, 5, 5);
-								gbc_lblNewLabel_1_1.gridwidth = 3;
-								gbc_lblNewLabel_1_1.gridx = 2;
-								gbc_lblNewLabel_1_1.gridy = 1;
-								Branch.add(lblNewLabel_1_1, gbc_lblNewLabel_1_1);
+								lblNewLabel_1_1.setBounds(178, 38, 173, 16);
+								Branch.add(lblNewLabel_1_1);
 
-								JLabel lblNewLabel_2 = new JLabel("Branch code:");
-								GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-								gbc_lblNewLabel_2.fill = GridBagConstraints.HORIZONTAL;
-								gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-								gbc_lblNewLabel_2.gridx = 1;
-								gbc_lblNewLabel_2.gridy = 3;
-								Branch.add(lblNewLabel_2, gbc_lblNewLabel_2);
+								JLabel lblNewLabel_2 = new JLabel("Work time:");
+								lblNewLabel_2.setBounds(31, 133, 75, 16);
+								Branch.add(lblNewLabel_2);
 
 								JTextField textField_6 = new JTextField();
+								textField_6.setBounds(111, 128, 130, 26);
 								textField_6.setColumns(10);
-								GridBagConstraints gbc_textField_6 = new GridBagConstraints();
-								gbc_textField_6.anchor = GridBagConstraints.SOUTHWEST;
-								gbc_textField_6.insets = new Insets(0, 0, 5, 5);
-								gbc_textField_6.gridx = 2;
-								gbc_textField_6.gridy = 3;
-								Branch.add(textField_6, gbc_textField_6);
+								Branch.add(textField_6);
 
-								JLabel lblNewLabel_3_2 = new JLabel("City:");
-								GridBagConstraints gbc_lblNewLabel_3_2 = new GridBagConstraints();
-								gbc_lblNewLabel_3_2.anchor = GridBagConstraints.EAST;
-								gbc_lblNewLabel_3_2.insets = new Insets(0, 0, 5, 5);
-								gbc_lblNewLabel_3_2.gridx = 4;
-								gbc_lblNewLabel_3_2.gridy = 3;
-								Branch.add(lblNewLabel_3_2, gbc_lblNewLabel_3_2);
+								JLabel lblNewLabel_3_2 = new JLabel("Neighborhood:");
+								lblNewLabel_3_2.setBounds(262, 105, 94, 16);
+								Branch.add(lblNewLabel_3_2);
 
-								JTextField textField_8 = new JTextField();
-								textField_8.setColumns(10);
-								GridBagConstraints gbc_textField_8 = new GridBagConstraints();
-								gbc_textField_8.anchor = GridBagConstraints.NORTHWEST;
-								gbc_textField_8.insets = new Insets(0, 0, 5, 0);
-								gbc_textField_8.gridx = 5;
-								gbc_textField_8.gridy = 3;
-								Branch.add(textField_8, gbc_textField_8);
-
-								JLabel emp_name_1 = new JLabel("Work time:");
-								GridBagConstraints gbc_emp_name_1 = new GridBagConstraints();
-								gbc_emp_name_1.anchor = GridBagConstraints.EAST;
-								gbc_emp_name_1.insets = new Insets(0, 0, 5, 5);
-								gbc_emp_name_1.gridx = 1;
-								gbc_emp_name_1.gridy = 4;
-								Branch.add(emp_name_1, gbc_emp_name_1);
+								JLabel emp_name_1 = new JLabel("City:");
+								emp_name_1.setBounds(72, 164, 34, 16);
+								Branch.add(emp_name_1);
 
 								JTextField textField_7 = new JTextField();
+								textField_7.setBounds(111, 159, 130, 26);
 								textField_7.setColumns(10);
-								GridBagConstraints gbc_textField_7 = new GridBagConstraints();
-								gbc_textField_7.anchor = GridBagConstraints.SOUTHWEST;
-								gbc_textField_7.insets = new Insets(0, 0, 5, 5);
-								gbc_textField_7.gridx = 2;
-								gbc_textField_7.gridy = 4;
-								Branch.add(textField_7, gbc_textField_7);
+								Branch.add(textField_7);
 
-								JLabel lblNewLabel_3_1_2 = new JLabel("Neighborhood:");
-								GridBagConstraints gbc_lblNewLabel_3_1_2 = new GridBagConstraints();
-								gbc_lblNewLabel_3_1_2.fill = GridBagConstraints.HORIZONTAL;
-								gbc_lblNewLabel_3_1_2.insets = new Insets(0, 0, 5, 5);
-								gbc_lblNewLabel_3_1_2.gridwidth = 2;
-								gbc_lblNewLabel_3_1_2.gridx = 3;
-								gbc_lblNewLabel_3_1_2.gridy = 4;
-								Branch.add(lblNewLabel_3_1_2, gbc_lblNewLabel_3_1_2);
+								JLabel lblNewLabel_3_1_2 = new JLabel("Street:");
+								lblNewLabel_3_1_2.setBounds(316, 136, 40, 16);
+								Branch.add(lblNewLabel_3_1_2);
 
 								JTextField textField_9 = new JTextField();
+								textField_9.setBounds(361, 131, 130, 26);
 								textField_9.setColumns(10);
-								GridBagConstraints gbc_textField_9 = new GridBagConstraints();
-								gbc_textField_9.anchor = GridBagConstraints.NORTHWEST;
-								gbc_textField_9.insets = new Insets(0, 0, 5, 0);
-								gbc_textField_9.gridx = 5;
-								gbc_textField_9.gridy = 4;
-								Branch.add(textField_9, gbc_textField_9);
+								Branch.add(textField_9);
 
-								JLabel lblNewLabel_3_1_1_3 = new JLabel("Street:");
-								GridBagConstraints gbc_lblNewLabel_3_1_1_3 = new GridBagConstraints();
-								gbc_lblNewLabel_3_1_1_3.anchor = GridBagConstraints.EAST;
-								gbc_lblNewLabel_3_1_1_3.insets = new Insets(0, 0, 5, 5);
-								gbc_lblNewLabel_3_1_1_3.gridx = 4;
-								gbc_lblNewLabel_3_1_1_3.gridy = 5;
-								Branch.add(lblNewLabel_3_1_1_3, gbc_lblNewLabel_3_1_1_3);
-
-								JTextField textField_10 = new JTextField();
-								textField_10.setColumns(10);
-								GridBagConstraints gbc_textField_10 = new GridBagConstraints();
-								gbc_textField_10.anchor = GridBagConstraints.NORTHWEST;
-								gbc_textField_10.insets = new Insets(0, 0, 5, 0);
-								gbc_textField_10.gridx = 5;
-								gbc_textField_10.gridy = 5;
-								Branch.add(textField_10, gbc_textField_10);
-
-								JButton btnNewButton_1 = new JButton("Add");
-								btnNewButton_1.addActionListener(new ActionListener() {// add branch
+								JButton btnNewButton_2 = new JButton("Add");
+								btnNewButton_2.setBounds(227, 253, 75, 40);
+								btnNewButton_2.addActionListener(new ActionListener() {// add branch
 									public void actionPerformed(ActionEvent e) {
 									}
 								});
-								GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-								gbc_btnNewButton_1.anchor = GridBagConstraints.EAST;
-								gbc_btnNewButton_1.fill = GridBagConstraints.VERTICAL;
-								gbc_btnNewButton_1.insets = new Insets(0, 0, 0, 5);
-								gbc_btnNewButton_1.gridwidth = 2;
-								gbc_btnNewButton_1.gridx = 2;
-								gbc_btnNewButton_1.gridy = 7;
-								Branch.add(btnNewButton_1, gbc_btnNewButton_1);
+								Branch.add(btnNewButton_2);
+
+								JLabel lblNewLabel_2_2 = new JLabel("Branch code:");
+								lblNewLabel_2_2.setBounds(18, 100, 88, 16);
+								Branch.add(lblNewLabel_2_2);
+
+								JTextField textField_12 = new JTextField();
+								textField_12.setBounds(111, 95, 130, 26);
+								textField_12.setColumns(10);
+								Branch.add(textField_12);
+
+								JTextField textField_13 = new JTextField();
+								textField_13.setBounds(361, 100, 130, 26);
+								textField_13.setColumns(10);
+								Branch.add(textField_13);
 								tabbedPane.addTab("Item", Item);
 
-								tabbedPane.addTab("Item", Item);
+								JLabel lblNewLabel_1_1_1 = new JLabel("Enter the new item info:");
+								lblNewLabel_1_1_1.setBounds(189, 45, 150, 16);
+
+								JLabel lblNewLabel_2_1 = new JLabel("Item name:");
+								lblNewLabel_2_1.setBounds(42, 117, 75, 16);
+
+								JTextField textField_8 = new JTextField();
+								textField_8.setBounds(122, 112, 130, 26);
+								textField_8.setColumns(10);
+
+								JLabel emp_name_1_1 = new JLabel("Price:");
+								emp_name_1_1.setBounds(83, 148, 34, 16);
+
+								JTextField textField_10 = new JTextField();
+								textField_10.setBounds(122, 143, 130, 26);
+								textField_10.setColumns(10);
+
+								JLabel lblNewLabel_3_2_1 = new JLabel("Item type:");
+								lblNewLabel_3_2_1.setBounds(287, 117, 63, 16);
+
+								JComboBox comboBox_1_2_1 = new JComboBox();
+								comboBox_1_2_1.setModel(
+										new DefaultComboBoxModel(new String[] { "Appetizer", "Dessert", "Main" }));
+								comboBox_1_2_1.setBounds(355, 113, 130, 27);
+
+								JLabel lblNewLabel_3_1_2_1 = new JLabel("Calories:");
+								lblNewLabel_3_1_2_1.setBounds(295, 148, 55, 16);
+
+								JTextField textField_11 = new JTextField();
+								textField_11.setBounds(355, 143, 130, 26);
+								textField_11.setColumns(10);
+
+								JButton btnNewButton_2_1 = new JButton("Add");
+								btnNewButton_2_1.setBounds(227, 260, 75, 40);
+								btnNewButton_2_1.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {// add item
+									}
+								});
+								Item.setLayout(null);
+								Item.add(lblNewLabel_1_1_1);
+								Item.add(lblNewLabel_2_1);
+								Item.add(textField_8);
+								Item.add(lblNewLabel_3_2_1);
+								Item.add(comboBox_1_2_1);
+								Item.add(emp_name_1_1);
+								Item.add(textField_10);
+								Item.add(lblNewLabel_3_1_2_1);
+								Item.add(textField_11);
+								Item.add(btnNewButton_2_1);
 
 								managerAdd.getContentPane().add(tabbedPane);
 
