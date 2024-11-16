@@ -31,7 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import com.mysql.cj.xdevapi.Statement;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.Taskbar.State;
+//import java.awt.Taskbar.State;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -524,6 +524,8 @@ public class Wister extends JFrame {
 													JOptionPane.WARNING_MESSAGE);
 
 										} catch (SQLException e) {
+											if (e.getMessage().contains("EMPLOYEE_chk_3"))
+											JOptionPane.showMessageDialog(null,"The only allowed Roles for employees are:\n    {Cashier, Chef, Server, Manager}", "invalid input",JOptionPane.WARNING_MESSAGE);
 											System.out.println(e.getMessage());
 										}
 
@@ -780,7 +782,7 @@ public class Wister extends JFrame {
 								// set up tab Employee (remove) until line 93
 								JComboBox<String> comboBox = new JComboBox<String>();
 								comboBox.setModel(new DefaultComboBoxModel(
-										new String[] { " Employee_ID", "Emp_Name", "Gender", "Role", "Salary" }));
+										new String[] { " Employee_ID", "Emp_Name", "Gender", "Role", "Salary" ,"Bcode"}));
 								comboBox.setBounds(325, 38, 96, 20);
 								Employee.add(comboBox);
 
@@ -924,7 +926,7 @@ public class Wister extends JFrame {
 														JOptionPane.ERROR_MESSAGE);
 											else {
 												java.sql.Statement stm2 = con.createStatement();
-												ResultSet resultSet = stm2.executeQuery("SELECT * " + "FROM EMPLOYEE ");
+												ResultSet resultSet = stm2.executeQuery("SELECT * " + "FROM ITEM ");
 												imodel.setRowCount(0);
 												fillITable(imodel, resultSet);
 											}
