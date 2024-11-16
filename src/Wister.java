@@ -143,7 +143,8 @@ public class Wister extends JFrame {
 						JButton managerSearchBtn = new JButton("Search"); // TODO: EMAN
 						managerSearchBtn.addActionListener(new ActionListener() { // 'SEARCH' manager veiw
 							public void actionPerformed(ActionEvent e) {
-
+                                 
+								createConnection();
 								JFrame managerSearch = new JFrame();
 								managerSearch.setTitle("SEARCH");
 								managerSearch.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -372,7 +373,8 @@ public class Wister extends JFrame {
 						JButton managerUpdateBtn = new JButton("Update");// TODO: EMAN
 						managerUpdateBtn.addActionListener(new ActionListener() { // 'UPDATE' manager veiw
 							public void actionPerformed(ActionEvent e) {
-
+                                 
+								createConnection();
 								JFrame managerUpdate = new JFrame();
 								managerUpdate.setTitle("UPDATE");
 								managerUpdate.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -676,6 +678,8 @@ public class Wister extends JFrame {
 						JButton managerRemoveBtn = new JButton("Remove");// TODO: EMAN
 						managerRemoveBtn.addActionListener(new ActionListener() { // 'REMOVE' manager veiw
 							public void actionPerformed(ActionEvent e) {
+
+								createConnection();
 								JFrame managerRemove = new JFrame();
 								managerRemove.setTitle("REMOVE");
 								managerRemove.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -937,6 +941,8 @@ public class Wister extends JFrame {
 						JButton managerAddBtn = new JButton("Add"); // TODO: Ghaida
 						managerAddBtn.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
+
+								createConnection();
 								JFrame managerAdd = new JFrame();
 								managerAdd.setTitle("Add");
 								managerAdd.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -1240,6 +1246,7 @@ public class Wister extends JFrame {
 						JButton cashierSearch = new JButton("Search"); // TODO: RENAD
 						cashierSearch.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
+								createConnection();
 								cashierSearch();
 							}
 						});
@@ -1247,6 +1254,7 @@ public class Wister extends JFrame {
 						JButton cashierUpdate = new JButton("Update");// TODO: RENAD
 						cashierUpdate.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
+								createConnection();
 								cashierUpdate();
 							}
 						});
@@ -1254,6 +1262,7 @@ public class Wister extends JFrame {
 						JButton cashierRemove = new JButton("Remove");// TODO: RENAD
 						cashierRemove.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
+								createConnection();
 								cashierRemove();
 							}
 						});
@@ -1262,6 +1271,8 @@ public class Wister extends JFrame {
 						cashierAdd.addActionListener(new ActionListener() {
 							@SuppressWarnings("unchecked")
 							public void actionPerformed(ActionEvent e) {
+
+								createConnection();
 								JFrame cashierAdd = new JFrame();
 								cashierAdd.setTitle("Add");
 								cashierAdd.setBounds(100, 100, 550, 400);
