@@ -1621,7 +1621,7 @@ public class Wister extends JFrame {
 								try {// this block gets employee ids from DB
 									java.sql.Statement empStatement = con.createStatement();
 									ResultSet resultSet = empStatement
-											.executeQuery("SELECT `Employee_ID` FROM EMPLOYEE;");
+											.executeQuery("SELECT `Employee_ID` FROM EMPLOYEE WHERE Role = 'Cashier';");
 									while (resultSet.next()) {
 										items.add(resultSet.getInt("Employee_ID"));
 									}
@@ -1811,8 +1811,6 @@ public class Wister extends JFrame {
 																}
 															}
 														}
-
-														// Notify the user that the order was processed
 														JOptionPane.showMessageDialog(null,
 																"Order has been successfully processed!", "Success",
 																JOptionPane.INFORMATION_MESSAGE);
