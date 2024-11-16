@@ -144,6 +144,7 @@ public class Wister extends JFrame {
 						managerSearchBtn.addActionListener(new ActionListener() { // 'SEARCH' manager veiw
 							public void actionPerformed(ActionEvent e) {
                                  
+								
 								createConnection();
 								JFrame managerSearch = new JFrame();
 								managerSearch.setTitle("SEARCH");
