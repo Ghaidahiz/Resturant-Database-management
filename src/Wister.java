@@ -1,5 +1,7 @@
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import java.awt.BorderLayout;
@@ -7,7 +9,9 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
+import java.awt.GridLayout;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -27,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import com.mysql.cj.xdevapi.Statement;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Taskbar.State;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -34,6 +39,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -158,9 +164,8 @@ public class Wister extends JFrame {
 								tabbedPane.addTab("Item", Item);
 
 								JComboBox<String> comboBox = new JComboBox<>();
-								comboBox.setModel(
-										new DefaultComboBoxModel<>(new String[] { "Show All", "Employee_ID", "Emp_Name",
-												"Bcode", "Role", "Gender", "Salary" }));
+								comboBox.setModel(new DefaultComboBoxModel<>(new String[] { "Show All", "Employee_ID",
+										"Emp_Name", "Bcode", "Role", "Gender", "Salary" }));
 								comboBox.setBounds(75, 43, 88, 22);
 								Employee.add(comboBox);
 
@@ -181,7 +186,7 @@ public class Wister extends JFrame {
 								btnNewButton.setBounds(607, 43, 102, 23);
 								Employee.add(btnNewButton);
 
-								Object[][] data = {}; 
+								Object[][] data = {};
 								DefaultTableModel emodel = new DefaultTableModel(data,
 										new String[] { "ID", "Branch_Code", "Name", "Residence_Number", "Phone",
 												"Gender", "Role", "Neighborhood", "Street", "Post_Code", "Salary" });
@@ -225,23 +230,17 @@ public class Wister extends JFrame {
 											java.sql.Statement stm = con.createStatement();
 											ResultSet resultSet;
 											if (comboBox.getSelectedItem().equals("Show All"))
-												resultSet = stm.executeQuery(
-														"SELECT * " +
-																"FROM EMPLOYEE ");
+												resultSet = stm.executeQuery("SELECT * " + "FROM EMPLOYEE ");
 											else if (comboBox.getSelectedItem().equals("Employee_ID")
 													|| comboBox.getSelectedItem().equals("Branch_code")
 													|| comboBox.getSelectedItem().equals("Salary")) {
 												int num = Integer.parseInt(textField.getText());
-												resultSet = stm.executeQuery(
-														"SELECT * " +
-																"FROM EMPLOYEE " +
-																"WHERE " + comboBox.getSelectedItem() + " = " + num);
+												resultSet = stm.executeQuery("SELECT * " + "FROM EMPLOYEE " + "WHERE "
+														+ comboBox.getSelectedItem() + " = " + num);
 											} else
-												resultSet = stm.executeQuery(
-														"SELECT * " +
-																"FROM EMPLOYEE " +
-																"WHERE " + comboBox.getSelectedItem() + "= \'"
-																+ textField.getText() + "\'"
+												resultSet = stm.executeQuery("SELECT * " + "FROM EMPLOYEE " + "WHERE "
+														+ comboBox.getSelectedItem() + "= \'" + textField.getText()
+														+ "\'"
 
 												);
 											emodel.setRowCount(0);
@@ -282,20 +281,14 @@ public class Wister extends JFrame {
 											ResultSet resultSet;
 											java.sql.Statement stm = con.createStatement();
 											if (comboBox_1.getSelectedItem().equals("Show All"))
-												resultSet = stm.executeQuery(
-														"SELECT *" +
-																" FROM BRANCH ");
+												resultSet = stm.executeQuery("SELECT *" + " FROM BRANCH ");
 											else if (comboBox_1.getSelectedItem().equals("City"))
-												resultSet = stm.executeQuery(
-														"SELECT *" +
-																" FROM BRANCH " +
-																"WHERE City=\'" + textField_1.getText() + "\'");
+												resultSet = stm.executeQuery("SELECT *" + " FROM BRANCH "
+														+ "WHERE City=\'" + textField_1.getText() + "\'");
 											else {
 												int num = Integer.parseInt(textField_1.getText());
 												resultSet = stm.executeQuery(
-														"SELECT *" +
-																" FROM BRANCH " +
-																"WHERE Branch_code=" + num);
+														"SELECT *" + " FROM BRANCH " + "WHERE Branch_code=" + num);
 											}
 											bmodel.setRowCount(0);
 											fillBTable(bmodel, resultSet);
@@ -316,9 +309,8 @@ public class Wister extends JFrame {
 								Item.add(lblNewLabel_4);
 
 								JComboBox<String> comboBox_2 = new JComboBox<>();
-								comboBox_2.setModel(
-										new DefaultComboBoxModel<>(
-												new String[] { "Show All", "Item_Name", "Item_Type", "Price" }));
+								comboBox_2.setModel(new DefaultComboBoxModel<>(
+										new String[] { "Show All", "Item_Name", "Item_Type", "Price" }));
 								comboBox_2.setBounds(203, 47, 81, 22);
 								Item.add(comboBox_2);
 
@@ -341,21 +333,15 @@ public class Wister extends JFrame {
 											java.sql.Statement stm = con.createStatement();
 											ResultSet resultSet;
 											if (comboBox_2.getSelectedItem().equals("Show All"))
-												resultSet = stm.executeQuery(
-														"SELECT *" +
-																" FROM ITEM ");
+												resultSet = stm.executeQuery("SELECT *" + " FROM ITEM ");
 											else if (comboBox_2.getSelectedItem().equals("Price")) {
 												double num = Double.parseDouble(textField_2.getText());
 												resultSet = stm.executeQuery(
-														"SELECT * " +
-																"FROM ITEM " +
-																"WHERE Price=" + num);
+														"SELECT * " + "FROM ITEM " + "WHERE Price=" + num);
 											} else
-												resultSet = stm.executeQuery(
-														"SELECT * " +
-																"FROM ITEM " +
-																" WHERE " + comboBox_2.getSelectedItem() + "= \'"
-																+ textField_2.getText() + "\'");
+												resultSet = stm.executeQuery("SELECT * " + "FROM ITEM " + " WHERE "
+														+ comboBox_2.getSelectedItem() + "= \'" + textField_2.getText()
+														+ "\'");
 
 											imodel.setRowCount(0);
 											fillITable(imodel, resultSet);
@@ -378,15 +364,14 @@ public class Wister extends JFrame {
 						JButton managerUpdateBtn = new JButton("Update");// TODO: EMAN
 						managerUpdateBtn.addActionListener(new ActionListener() { // 'UPDATE' manager veiw
 							public void actionPerformed(ActionEvent e) {
-                            
+
 								JFrame managerUpdate = new JFrame();
 								managerUpdate.setTitle("UPDATE");
 								managerUpdate.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 								managerUpdate.setBounds(100, 100, 830, 400);
 								managerUpdate.getContentPane().setLayout(new BorderLayout());
 								managerUpdate.setLocationRelativeTo(null);
-                                
-								
+
 								JTabbedPane tabbedPane = new JTabbedPane();
 
 								JPanel Item = new JPanel();
@@ -400,7 +385,7 @@ public class Wister extends JFrame {
 								Branch.setLayout(null);
 								tabbedPane.addTab("Branch", Branch);
 
-								Object[][] data = {}; 
+								Object[][] data = {};
 								DefaultTableModel emodel = new DefaultTableModel(data,
 										new String[] { "ID", "Branch_Code", "Name", "Residence_Number", "Phone",
 												"Gender", "Role", "Neighborhood", "Street", "Post_Code", "Salary" });
@@ -438,38 +423,29 @@ public class Wister extends JFrame {
 								etable.getColumnModel().getColumn(4).setPreferredWidth(65);
 								etable.getColumnModel().getColumn(8).setPreferredWidth(50);
 
-								try{
-									java.sql.Statement stm= con.createStatement();
-									ResultSet resultSet= stm.executeQuery(
-										"SELECT * "+ "FROM EMPLOYEE "
-										);
+								try {
+									java.sql.Statement stm = con.createStatement();
+									ResultSet resultSet = stm.executeQuery("SELECT * " + "FROM EMPLOYEE ");
 									fillETable(emodel, resultSet);
-									}
-									catch(SQLException ex){
-										System.out.println(ex.getMessage());
-									}
+								} catch (SQLException ex) {
+									System.out.println(ex.getMessage());
+								}
 
-									try{
-										java.sql.Statement stm= con.createStatement();
-										ResultSet resultSet= stm.executeQuery(
-											"SELECT * "+ "FROM BRANCH "
-											);
-										fillBTable(bmodel, resultSet);
-										}
-										catch(SQLException ex){
-											System.out.println(ex.getMessage());
-										}
+								try {
+									java.sql.Statement stm = con.createStatement();
+									ResultSet resultSet = stm.executeQuery("SELECT * " + "FROM BRANCH ");
+									fillBTable(bmodel, resultSet);
+								} catch (SQLException ex) {
+									System.out.println(ex.getMessage());
+								}
 
-										try{
-											java.sql.Statement stm= con.createStatement();
-											ResultSet resultSet= stm.executeQuery(
-												"SELECT * "+ "FROM ITEM "
-												);
-											fillITable(imodel, resultSet);
-											}
-											catch(SQLException ex){
-												System.out.println(ex.getMessage());
-											}
+								try {
+									java.sql.Statement stm = con.createStatement();
+									ResultSet resultSet = stm.executeQuery("SELECT * " + "FROM ITEM ");
+									fillITable(imodel, resultSet);
+								} catch (SQLException ex) {
+									System.out.println(ex.getMessage());
+								}
 
 								JLabel lblNewLabel = new JLabel(
 										"Enter ID of the employee you want to update his info:");
@@ -477,8 +453,8 @@ public class Wister extends JFrame {
 								Employee.add(lblNewLabel);
 
 								JComboBox comboBox_1 = new JComboBox();
-								comboBox_1.setModel(
-										new DefaultComboBoxModel(new String[] { "Salary", "Emp_Phone", "Role" ,"Bcode"}));
+								comboBox_1.setModel(new DefaultComboBoxModel(
+										new String[] { "Salary", "Emp_Phone", "Role", "Bcode" }));
 								comboBox_1.setBounds(332, 55, 96, 22);
 								Employee.add(comboBox_1);
 
@@ -509,48 +485,46 @@ public class Wister extends JFrame {
 									public void actionPerformed(ActionEvent E) {
 										try {
 											java.sql.Statement stm = con.createStatement();
-											if (comboBox_1.getSelectedItem().equals("Emp_Phone")|| comboBox_1.getSelectedItem().equals("Role"))
-												numOfAffectedRow = stm.executeUpdate(
-													"UPDATE EMPLOYEE "
-														+ "SET "+comboBox_1.getSelectedItem()+" = \'" + textField.getText() + "\' "
-														+ " WHERE Employee_ID=" + textField_6.getText());
+											if (comboBox_1.getSelectedItem().equals("Emp_Phone")
+													|| comboBox_1.getSelectedItem().equals("Role"))
+												numOfAffectedRow = stm.executeUpdate("UPDATE EMPLOYEE " + "SET "
+														+ comboBox_1.getSelectedItem() + " = \'" + textField.getText()
+														+ "\' " + " WHERE Employee_ID=" + textField_6.getText());
 											else {
 												int num = Integer.parseInt(textField_6.getText());
-												numOfAffectedRow = stm
-														.executeUpdate("UPDATE EMPLOYEE " + "SET "+comboBox_1.getSelectedItem()+" = "
-																+ textField.getText() + " WHERE Employee_ID=" + num);
+												numOfAffectedRow = stm.executeUpdate("UPDATE EMPLOYEE " + "SET "
+														+ comboBox_1.getSelectedItem() + " = " + textField.getText()
+														+ " WHERE Employee_ID=" + num);
 											}
 
 											if (numOfAffectedRow == 0)
 												JOptionPane.showMessageDialog(null,
 														"There is no Empolyee with the received ID", "not found :(",
 														JOptionPane.ERROR_MESSAGE);
-											/*else
-												JOptionPane.showMessageDialog(null,
-														"The " + comboBox_1.getSelectedItem()
-																+ " of the Empolyee with the received ID ("
-																+ textField_6.getText() + ") was updated to be: "
-																+ textField.getText(),
-														"Updated seccessfully :)", JOptionPane.INFORMATION_MESSAGE);*/
-                                            else{java.sql.Statement stm2= con.createStatement();
-												ResultSet resultSet= stm2.executeQuery(
-													"SELECT * "+ "FROM EMPLOYEE "
-													);
+											/*
+											 * else JOptionPane.showMessageDialog(null, "The " +
+											 * comboBox_1.getSelectedItem() + " of the Empolyee with the received ID ("
+											 * + textField_6.getText() + ") was updated to be: " + textField.getText(),
+											 * "Updated seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
+											 */
+											else {
+												java.sql.Statement stm2 = con.createStatement();
+												ResultSet resultSet = stm2.executeQuery("SELECT * " + "FROM EMPLOYEE ");
 												emodel.setRowCount(0);
-												fillETable(emodel, resultSet);}
+												fillETable(emodel, resultSet);
+											}
 										} catch (NumberFormatException e) {
 											JOptionPane.showMessageDialog(null, "please enter a number!", "Input Error",
 													JOptionPane.WARNING_MESSAGE);
-										}
-                                        catch(SQLIntegrityConstraintViolationException e){
-											JOptionPane.showMessageDialog(null, "NO Branch with the folowng branch code!", "invalid input",JOptionPane.WARNING_MESSAGE);
-													
-										}
-										catch (SQLException e) {
+										} catch (SQLIntegrityConstraintViolationException e) {
+											JOptionPane.showMessageDialog(null,
+													"NO Branch with the folowng branch code!", "invalid input",
+													JOptionPane.WARNING_MESSAGE);
+
+										} catch (SQLException e) {
 											System.out.println(e.getMessage());
 										}
 
-										
 									}
 								});
 
@@ -606,13 +580,13 @@ public class Wister extends JFrame {
 											numOfAffectedRow = stm.executeUpdate("UPDATE BRANCH " + "SET Work_time= \'"
 													+ comboBox.getSelectedItem() + ":" + comboBox_2.getSelectedItem()
 													+ ":00\' " + "WHERE Branch_code = " + textField_1.getText());
-											/*if (numOfAffectedRow == 1)
-												JOptionPane.showMessageDialog(null,
-														"The working time of the branch(" + textField_1.getText()
-																+ ") was updated to be: " + comboBox.getSelectedItem()
-																+ ":" + comboBox_2.getSelectedItem() + ":00",
-														"Updated seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
-											else*/ if (numOfAffectedRow == 0) {
+											/*
+											 * if (numOfAffectedRow == 1) JOptionPane.showMessageDialog(null,
+											 * "The working time of the branch(" + textField_1.getText() +
+											 * ") was updated to be: " + comboBox.getSelectedItem() + ":" +
+											 * comboBox_2.getSelectedItem() + ":00", "Updated seccessfully :)",
+											 * JOptionPane.INFORMATION_MESSAGE); else
+											 */ if (numOfAffectedRow == 0) {
 												JOptionPane.showMessageDialog(null,
 														"There is no Branch with the received Branch code!",
 														"not found :(", JOptionPane.ERROR_MESSAGE);
@@ -626,17 +600,14 @@ public class Wister extends JFrame {
 											System.err.println(e.getMessage());
 										}
 
-										try{
-											java.sql.Statement stm= con.createStatement();
-											ResultSet resultSet= stm.executeQuery(
-												"SELECT * "+ "FROM BRANCH "
-												);
+										try {
+											java.sql.Statement stm = con.createStatement();
+											ResultSet resultSet = stm.executeQuery("SELECT * " + "FROM BRANCH ");
 											bmodel.setRowCount(0);
 											fillBTable(bmodel, resultSet);
-											}
-											catch(SQLException ex){
-												System.out.println(ex.getMessage());
-											}
+										} catch (SQLException ex) {
+											System.out.println(ex.getMessage());
+										}
 									}
 								});
 
@@ -675,11 +646,11 @@ public class Wister extends JFrame {
 												JOptionPane.showMessageDialog(null,
 														"There is no Item with the received Name!", "not found :(",
 														JOptionPane.ERROR_MESSAGE);
-											/*else
-												JOptionPane.showMessageDialog(null,
-														"The price of " + textField_4.getText() + " was updated to be: "
-																+ textField_5.getText() + ".00SR",
-														"Updated seccessfully :)", JOptionPane.INFORMATION_MESSAGE);*/
+											/*
+											 * else JOptionPane.showMessageDialog(null, "The price of " +
+											 * textField_4.getText() + " was updated to be: " + textField_5.getText() +
+											 * ".00SR", "Updated seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
+											 */
 
 										} catch (SQLException e) {
 											System.err.println(e.getMessage());
@@ -689,17 +660,14 @@ public class Wister extends JFrame {
 													JOptionPane.ERROR_MESSAGE);
 										}
 
-										try{
-											java.sql.Statement stm= con.createStatement();
-											ResultSet resultSet= stm.executeQuery(
-												"SELECT * "+ "FROM ITEM "
-												);
-										    imodel.setRowCount(0);
+										try {
+											java.sql.Statement stm = con.createStatement();
+											ResultSet resultSet = stm.executeQuery("SELECT * " + "FROM ITEM ");
+											imodel.setRowCount(0);
 											fillITable(imodel, resultSet);
-											}
-											catch(SQLException ex){
-												System.out.println(ex.getMessage());
-											}
+										} catch (SQLException ex) {
+											System.out.println(ex.getMessage());
+										}
 									}
 								});
 
@@ -724,38 +692,41 @@ public class Wister extends JFrame {
 								// Create panels to add to each tab
 								JPanel Employee = new JPanel();
 								Employee.setLayout(null);
-								
+
 								JPanel Branch = new JPanel();
 								Branch.setLayout(null);
-						
+
 								JPanel Item = new JPanel();
 								Item.setLayout(null);
-								
-						
-								 Object[][] data = {};                  // ************** LOOK HERE RENAD
-								DefaultTableModel emodel = new DefaultTableModel(data,new String[] { "ID", "Branch_Code", "Name", "Residence_Number", "Phone","Gender", "Role", "Neighborhood", "Street", "Post_Code", "Salary" });
-								DefaultTableModel bmodel = new DefaultTableModel(data,new String[] { "Branch_code", "Work_time", "City", "Neighborhood", "Street" });
-								DefaultTableModel imodel = new DefaultTableModel(data,new String[] { "Item_Name", "Price", "Item_Type", "Calories" });
+
+								Object[][] data = {}; // ************** LOOK HERE RENAD
+								DefaultTableModel emodel = new DefaultTableModel(data,
+										new String[] { "ID", "Branch_Code", "Name", "Residence_Number", "Phone",
+												"Gender", "Role", "Neighborhood", "Street", "Post_Code", "Salary" });
+								DefaultTableModel bmodel = new DefaultTableModel(data,
+										new String[] { "Branch_code", "Work_time", "City", "Neighborhood", "Street" });
+								DefaultTableModel imodel = new DefaultTableModel(data,
+										new String[] { "Item_Name", "Price", "Item_Type", "Calories" });
 								JTable etable = new JTable(emodel);
 								JTable btable = new JTable(bmodel);
 								JTable itable = new JTable(imodel);
-						
+
 								etable.setEnabled(false);
 								btable.setEnabled(false);
 								itable.setEnabled(false);
-						
+
 								JScrollPane escrollPane = new JScrollPane(etable);
 								JScrollPane bscrollPane = new JScrollPane(btable);
 								JScrollPane iscrollPane = new JScrollPane(itable);
-						
+
 								escrollPane.setBounds(5, 120, 800, 200);
 								bscrollPane.setBounds(169, 124, 500, 200);
 								iscrollPane.setBounds(140, 124, 500, 200);
-						
+
 								Employee.add(escrollPane);
 								Branch.add(bscrollPane);
 								Item.add(iscrollPane);
-						
+
 								etable.getColumnModel().getColumn(0).setPreferredWidth(30);
 								etable.getColumnModel().getColumn(1).setPreferredWidth(80);
 								etable.getColumnModel().getColumn(2).setPreferredWidth(50);
@@ -765,74 +736,64 @@ public class Wister extends JFrame {
 								etable.getColumnModel().getColumn(3).setPreferredWidth(90);
 								etable.getColumnModel().getColumn(4).setPreferredWidth(65);
 								etable.getColumnModel().getColumn(8).setPreferredWidth(50);
-								
-								tabbedPane.addTab("Employee",Employee);
-								 tabbedPane.addTab("Branch",Branch);
-								 tabbedPane.addTab("Item",Item);
 
-								 try{
-									java.sql.Statement stm= con.createStatement();
-									ResultSet resultSet= stm.executeQuery(
-										"SELECT * "+ "FROM EMPLOYEE "
-										);
+								tabbedPane.addTab("Employee", Employee);
+								tabbedPane.addTab("Branch", Branch);
+								tabbedPane.addTab("Item", Item);
+
+								try {
+									java.sql.Statement stm = con.createStatement();
+									ResultSet resultSet = stm.executeQuery("SELECT * " + "FROM EMPLOYEE ");
 									fillETable(emodel, resultSet);
-									}
-									catch(SQLException ex){
-										System.out.println(ex.getMessage());
-									}
+								} catch (SQLException ex) {
+									System.out.println(ex.getMessage());
+								}
 
-									try{
-										java.sql.Statement stm= con.createStatement();
-										ResultSet resultSet= stm.executeQuery(
-											"SELECT * "+ "FROM BRANCH "
-											);
-										fillBTable(bmodel, resultSet);
-										}
-										catch(SQLException ex){
-											System.out.println(ex.getMessage());
-										}
+								try {
+									java.sql.Statement stm = con.createStatement();
+									ResultSet resultSet = stm.executeQuery("SELECT * " + "FROM BRANCH ");
+									fillBTable(bmodel, resultSet);
+								} catch (SQLException ex) {
+									System.out.println(ex.getMessage());
+								}
 
-										try{
-											java.sql.Statement stm= con.createStatement();
-											ResultSet resultSet= stm.executeQuery(
-												"SELECT * "+ "FROM ITEM "
-												);
-											fillITable(imodel, resultSet);
-											}
-											catch(SQLException ex){
-												System.out.println(ex.getMessage());
-											}
+								try {
+									java.sql.Statement stm = con.createStatement();
+									ResultSet resultSet = stm.executeQuery("SELECT * " + "FROM ITEM ");
+									fillITable(imodel, resultSet);
+								} catch (SQLException ex) {
+									System.out.println(ex.getMessage());
+								}
 
-								
 								JLabel lblEnterNameOf = new JLabel("Enter name of the item you want to remove:   ");
 								lblEnterNameOf.setBounds(96, 59, 273, 20);
 								Item.add(lblEnterNameOf);
-						
-								// Add panels as tabs to the JTabbedPane        
+
+								// Add panels as tabs to the JTabbedPane
 								JLabel labal_2 = new JLabel("Remove employees by thier:");
 								labal_2.setHorizontalAlignment(SwingConstants.LEFT);
 								labal_2.setBounds(134, 32, 181, 32);
 								Employee.add(labal_2);
-								
+
 								// set up tab Employee (remove) until line 93
 								JComboBox<String> comboBox = new JComboBox<String>();
-								comboBox.setModel(new DefaultComboBoxModel(new String[] {" Employee_ID", "Emp_Name", "Gender", "Role", "Salary"}));
+								comboBox.setModel(new DefaultComboBoxModel(
+										new String[] { " Employee_ID", "Emp_Name", "Gender", "Role", "Salary" }));
 								comboBox.setBounds(325, 38, 96, 20);
 								Employee.add(comboBox);
-								
+
 								JTextField textField = new JTextField();
 								textField.setBounds(325, 75, 96, 20);
 								Employee.add(textField);
 								textField.setColumns(10);
-							   
+
 								JLabel lblNewLabel = new JLabel("Enter a value to remove all employees that match:");
 								lblNewLabel.setBounds(10, 75, 305, 20);
 								Employee.add(lblNewLabel);
-								
+
 								JButton button = new JButton("Remove");
 								button.setBounds(496, 37, 89, 23);
 								Employee.add(button);
-						
 
 								button.addActionListener(new ActionListener() {
 									@Override
@@ -857,17 +818,18 @@ public class Wister extends JFrame {
 												JOptionPane.showMessageDialog(null,
 														"There is no Empolyee with the received value", "not found :(",
 														JOptionPane.ERROR_MESSAGE);
-											else{
-											java.sql.Statement stm2= con.createStatement();
-											ResultSet resultSet= stm2.executeQuery(
-												"SELECT * "+ "FROM EMPLOYEE "
-												);
-											emodel.setRowCount(0);
-											fillETable(emodel, resultSet);}
-												/*JOptionPane.showMessageDialog(null,
-														"All Empolyees with \'" + comboBox.getSelectedItem() + " = "
-																+ textField.getText() + "\' are Removed seccessfully ",
-														"Removed seccessfully :)", JOptionPane.INFORMATION_MESSAGE); */
+											else {
+												java.sql.Statement stm2 = con.createStatement();
+												ResultSet resultSet = stm2.executeQuery("SELECT * " + "FROM EMPLOYEE ");
+												emodel.setRowCount(0);
+												fillETable(emodel, resultSet);
+											}
+											/*
+											 * JOptionPane.showMessageDialog(null, "All Empolyees with \'" +
+											 * comboBox.getSelectedItem() + " = " + textField.getText() +
+											 * "\' are Removed seccessfully ", "Removed seccessfully :)",
+											 * JOptionPane.INFORMATION_MESSAGE);
+											 */
 
 										} catch (NumberFormatException E) {
 											JOptionPane.showMessageDialog(null, "please enter a number", "Input Error",
@@ -878,15 +840,16 @@ public class Wister extends JFrame {
 									}
 								});
 
-								JLabel lblNewLabel_2 = new JLabel("Enter the code of the Branch \r\nyou want to remove:");
+								JLabel lblNewLabel_2 = new JLabel(
+										"Enter the code of the Branch \r\nyou want to remove:");
 								lblNewLabel_2.setBounds(98, 36, 305, 31);
 								Branch.add(lblNewLabel_2);
-								
+
 								JTextField textField_1 = new JTextField();
 								textField_1.setBounds(401, 41, 96, 20);
 								Branch.add(textField_1);
 								textField_1.setColumns(10);
-								
+
 								JButton Button_1 = new JButton("Remove");
 								Button_1.setBounds(530, 40, 96, 23);
 								Branch.add(Button_1);
@@ -907,17 +870,17 @@ public class Wister extends JFrame {
 												JOptionPane.showMessageDialog(null,
 														"There is no Branch with the recived Branch_code",
 														"not found :(", JOptionPane.ERROR_MESSAGE);
-											else{
-												java.sql.Statement stm2= con.createStatement();
-												ResultSet resultSet= stm2.executeQuery(
-													"SELECT * "+ "FROM BRANCH "
-													);
+											else {
+												java.sql.Statement stm2 = con.createStatement();
+												ResultSet resultSet = stm2.executeQuery("SELECT * " + "FROM BRANCH ");
 												bmodel.setRowCount(0);
-												fillBTable(bmodel, resultSet);}
-												/*JOptionPane.showMessageDialog(null,
-														"The Branch (with Branch_code = " + textField_1.getText()
-																+ ") is removed seccessfully.",
-														"Removed seccessfully :)", JOptionPane.INFORMATION_MESSAGE);*/
+												fillBTable(bmodel, resultSet);
+											}
+											/*
+											 * JOptionPane.showMessageDialog(null, "The Branch (with Branch_code = " +
+											 * textField_1.getText() + ") is removed seccessfully.",
+											 * "Removed seccessfully :)", JOptionPane.INFORMATION_MESSAGE);
+											 */
 										} catch (NumberFormatException ex) {
 											JOptionPane.showMessageDialog(null, "please enter a number", "Input Error",
 													JOptionPane.WARNING_MESSAGE);
@@ -942,7 +905,7 @@ public class Wister extends JFrame {
 								textField_2.setBounds(361, 59, 96, 20);
 								Item.add(textField_2);
 								textField_2.setColumns(10);
-								
+
 								JButton btnNewButton = new JButton("Remove");
 								btnNewButton.setBounds(518, 58, 99, 23);
 								Item.add(btnNewButton);
@@ -957,18 +920,17 @@ public class Wister extends JFrame {
 												JOptionPane.showMessageDialog(null,
 														"There is no item with the received name!", "not found :(",
 														JOptionPane.ERROR_MESSAGE);
-											else{
-												java.sql.Statement stm2= con.createStatement();
-												ResultSet resultSet= stm2.executeQuery(
-													"SELECT * "+ "FROM EMPLOYEE "
-													);
+											else {
+												java.sql.Statement stm2 = con.createStatement();
+												ResultSet resultSet = stm2.executeQuery("SELECT * " + "FROM EMPLOYEE ");
 												imodel.setRowCount(0);
 												fillITable(imodel, resultSet);
 											}
-												/*JOptionPane.showMessageDialog(null,
-														"The Item ( " + textField_2.getText()
-																+ " ) is removed seccessfully.",
-														"Removed Seccessfully :)", JOptionPane.INFORMATION_MESSAGE);*/
+											/*
+											 * JOptionPane.showMessageDialog(null, "The Item ( " + textField_2.getText()
+											 * + " ) is removed seccessfully.", "Removed Seccessfully :)",
+											 * JOptionPane.INFORMATION_MESSAGE);
+											 */
 
 										} catch (SQLException e) {
 											System.out.println(e.getMessage());
@@ -1309,7 +1271,401 @@ public class Wister extends JFrame {
 
 						JButton cashierAdd = new JButton("Add"); // TODO: Ghaida
 						cashierAdd.addActionListener(new ActionListener() {
+							@SuppressWarnings("unchecked")
 							public void actionPerformed(ActionEvent e) {
+								JFrame cashierAdd = new JFrame();
+								cashierAdd.setTitle("Add");
+								cashierAdd.setBounds(100, 100, 550, 400);
+								cashierAdd.setLocationRelativeTo(null);
+								cashierAdd.getContentPane().setLayout(new BorderLayout());
+
+								JTabbedPane tabbedPane = new JTabbedPane();
+
+								// Create panels to add to each tab
+								JPanel Order = new JPanel();
+
+								JPanel Customer = new JPanel();
+
+								// Add panels as tabs to the JTabbedPane
+								tabbedPane.addTab("Order", Order);
+								ButtonGroup group = new ButtonGroup();
+								Order.setLayout(null);
+
+								JLabel lblNewLabel_1 = new JLabel("Enter the new Order's info:");
+								lblNewLabel_1.setBounds(168, 14, 192, 16);
+								Order.add(lblNewLabel_1);
+
+								JLabel lblNewLabel = new JLabel("Employee ID:");
+								lblNewLabel.setBounds(22, 114, 82, 16);
+								Order.add(lblNewLabel);
+
+								JLabel ord_name = new JLabel("Order number:");
+								ord_name.setBounds(6, 142, 94, 16);
+								Order.add(ord_name);
+
+								JLabel lblNewLabel_3_1_1_1 = new JLabel("Payment method:");
+								lblNewLabel_3_1_1_1.setBounds(267, 111, 116, 16);
+								Order.add(lblNewLabel_3_1_1_1);
+
+								JComboBox comboBox_1_1 = new JComboBox();
+								comboBox_1_1.setBounds(380, 107, 121, 27);
+								comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] { "CASH", "CREDIT CARD" })); // TODO:
+																															// fix
+								Order.add(comboBox_1_1);
+
+								JLabel lblNewLabel_3_1_1_2 = new JLabel("Total price:");
+								lblNewLabel_3_1_1_2.setBounds(25, 170, 79, 16);
+								Order.add(lblNewLabel_3_1_1_2);
+
+								JLabel lblResidenceNumber = new JLabel("Preperation time:");
+								lblResidenceNumber.setBounds(267, 141, 107, 16);
+								Order.add(lblResidenceNumber);
+
+								JLabel lblPhoneNumber = new JLabel("Customer Phone:");
+								lblPhoneNumber.setBounds(267, 165, 108, 16);
+								Order.add(lblPhoneNumber);
+
+								/*
+								 * JButton btnNewButton = new JButton("Add"); btnNewButton.setBounds(227, 257,
+								 * 75, 40); btnNewButton.addActionListener(new ActionListener() { public void
+								 * actionPerformed(ActionEvent e) {// add Order } }); Order.add(btnNewButton);
+								 */
+
+								JTextField ordNumField = new JTextField();// ord id
+								ordNumField.setBounds(107, 137, 130, 26);
+								ordNumField.setColumns(10);
+								Order.add(ordNumField);
+
+								JTextField pricField = new JTextField();// total price
+								pricField.setBounds(107, 163, 130, 26);
+								pricField.setColumns(10);
+								Order.add(pricField);
+
+								JTextField prepField = new JTextField();// prep time
+								prepField.setBounds(382, 134, 130, 26);
+								prepField.setColumns(10);
+								Order.add(prepField);
+
+								/*
+								 * JTextField cPhoneField = new JTextField();//customer phone
+								 * cPhoneField.setBounds(382, 160, 130, 26); cPhoneField.setColumns(10);
+								 * Order.add(cPhoneField);
+								 */
+								JComboBox comboBox_1_3 = new JComboBox();
+								comboBox_1_3.removeAllItems();
+								ArrayList<String> items3 = new ArrayList<>();
+								try {// this block gets customer numbers from DB
+									java.sql.Statement custStatement = con.createStatement();
+									ResultSet resultSet = custStatement
+											.executeQuery("SELECT `Phone_Number` FROM CUSTOMER;");
+									while (resultSet.next()) {
+										items3.add(resultSet.getString("Phone_Number"));
+									}
+								} catch (SQLException e1) {
+									e1.getMessage();
+								}
+
+								for (String custID : items3) {
+									comboBox_1_3.addItem(custID);
+
+								}
+								comboBox_1_3.setBounds(382, 160, 130, 26);
+								Order.add(comboBox_1_3);
+
+								JComboBox comboBox_1_2 = new JComboBox();
+								comboBox_1_2.removeAllItems();
+								ArrayList<Integer> items = new ArrayList<>();
+								try {// this block gets employee ids from DB
+									java.sql.Statement empStatement = con.createStatement();
+									ResultSet resultSet = empStatement
+											.executeQuery("SELECT `Employee_ID` FROM EMPLOYEE;");
+									while (resultSet.next()) {
+										items.add(resultSet.getInt("Employee_ID"));
+									}
+								} catch (SQLException e1) {
+									e1.getMessage();
+								}
+
+								for (Integer empID : items) {
+									comboBox_1_2.addItem(empID);
+
+								}
+								comboBox_1_2.setBounds(107, 110, 130, 27);
+								Order.add(comboBox_1_2);
+
+								// Add Items to Order Button
+								JButton addItemsButton = new JButton("Add Items to the Order");
+								addItemsButton.setBounds(167, 200, 200, 40);
+								addItemsButton.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {
+										JFrame order2 = new JFrame();
+										order2.setDefaultCloseOperation(HIDE_ON_CLOSE);
+										order2.setTitle("Add items");
+										order2.setBounds(100, 100, 550, 400);
+										order2.setLocationRelativeTo(null);
+
+										JPanel itemSelectionPanel = new JPanel(new GridLayout(0, 3, 10, 10));
+										itemSelectionPanel.setPreferredSize(new java.awt.Dimension(500, 300));
+
+										JLabel itemLabel = new JLabel("Item");
+										JLabel quantityLabel = new JLabel("Quantity");
+										itemSelectionPanel.add(itemLabel);
+										itemSelectionPanel.add(quantityLabel);
+										itemSelectionPanel.add(new JLabel());
+
+										ArrayList<String> items2 = new ArrayList<String>();
+										try {// this block gets item names from DB
+											java.sql.Statement itmStatement = con.createStatement();
+											ResultSet resultSet = itmStatement
+													.executeQuery("SELECT `Item_Name` FROM ITEM;");
+											while (resultSet.next()) {
+												items2.add(resultSet.getString("Item_Name"));
+											}
+										} catch (SQLException e1) {
+											e1.getMessage();
+										}
+
+										ArrayList<JCheckBox> checkBoxes = new ArrayList<>();
+										ArrayList<JTextField> quantityFields = new ArrayList<>();
+
+										for (String item : items2) {
+											JCheckBox itemCheckBox = new JCheckBox(item);
+											JTextField quantityField = new JTextField();
+											quantityField.setEnabled(false);
+											checkBoxes.add(itemCheckBox);
+											quantityFields.add(quantityField);
+
+											// listener for enabling/disabling the quantity text field based on checkbox
+											// state
+											itemCheckBox.addItemListener(new ItemListener() {
+												@Override
+												public void itemStateChanged(ItemEvent e) {
+													if (e.getStateChange() == ItemEvent.SELECTED) {
+														quantityField.setEnabled(true);
+													} else {
+														quantityField.setEnabled(false);
+														quantityField.setText("");
+													}
+												}
+											});
+
+											itemSelectionPanel.add(itemCheckBox);
+											itemSelectionPanel.add(quantityField);
+											itemSelectionPanel.add(new JLabel());
+										}
+										JButton additemsButton2 = new JButton("Add Order");// adds in
+																							// CONSISTS OF and ORDER
+										additemsButton2.addActionListener(new ActionListener() {
+											public void actionPerformed(ActionEvent e) {
+												boolean exists = false, ordNumValid = false;
+												String itmQuery = new String();
+												int ordNum = 0;
+												try {
+													ordNum = Integer.parseInt(ordNumField.getText().trim());
+													ordNumValid = true; // If parsing is successful, the order number is
+																		// valid
+													itmQuery = "SELECT * FROM `ORDER` WHERE Order_Number = " + ordNum;
+												} catch (NumberFormatException e3) {
+													System.out.println("parsing: " + e3.getMessage());
+
+												}
+
+												if (ordNumValid) {
+													// If the order number is valid, check if it already exists in the
+													// database
+													try (java.sql.Statement stmt = con.createStatement();
+															ResultSet rs = stmt.executeQuery(itmQuery)) {
+														if (rs.next()) {
+															exists = true;
+														}
+													} catch (SQLException e4) {
+														System.out.println("Error executing SQL: " + e4.getMessage());
+													}
+												}
+
+												if (exists || !ordNumValid) {
+													JOptionPane.showMessageDialog(null,
+															"Incorrect/duplicate Order number", "Oops! ..",
+															JOptionPane.ERROR_MESSAGE);
+												} else {
+
+													boolean validOrder = true;
+													double price = 0;
+													int prepTime = 0;
+
+													// Validate price and preparation time
+													try {
+														price = Double.parseDouble(pricField.getText());
+														prepTime = Integer.parseInt(prepField.getText());
+														if (price < 0 || prepTime < 0) {
+															validOrder = false;
+															throw new NumberFormatException("negative");
+														}
+													} catch (NumberFormatException e6) {
+														JOptionPane.showMessageDialog(null,
+																"Incorrect input in price/preparation time. Please enter valid numbers.",
+																"Oops! ..", JOptionPane.ERROR_MESSAGE);
+														validOrder = false;
+													}
+
+													// Insert the order into the ORDER table only once
+													if (validOrder) {
+														try {
+															String orderInsertQuery = "INSERT INTO `ORDER` (E_ID, Order_Number, Total_Price, Preperation_time, Cus_phone, Payment_Method) "
+																	+ "VALUES (" + comboBox_1_2.getSelectedItem() + ", "
+																	+ ordNum + ", " + price + ", " + prepTime + ", '"
+																	+ comboBox_1_3.getSelectedItem() + "', '"
+																	+ comboBox_1_1.getSelectedItem() + "')";
+															java.sql.Statement orderStatement = con.createStatement();
+															orderStatement.executeUpdate(orderInsertQuery);
+														} catch (SQLException sq1) {
+															validOrder = false;
+															JOptionPane.showMessageDialog(null,
+																	"Error inserting order: " + sq1.getMessage(),
+																	"Order Error", JOptionPane.ERROR_MESSAGE);
+														}
+													}
+
+													// If the order was successfully inserted, insert the items
+													if (validOrder) {
+														for (int i = 0; i < checkBoxes.size(); i++) {
+															if (checkBoxes.get(i).isSelected()) {
+																String currentItem = items2.get(i);
+																int currentQty = 0;
+
+																// Validate the quantity for the item
+																try {
+																	currentQty = Integer
+																			.parseInt(quantityFields.get(i).getText());
+																	if (currentQty <= 0) {
+																		JOptionPane.showMessageDialog(null,
+																				"Quantity must be greater than 0 for item: "
+																						+ currentItem,
+																				"Invalid Quantity",
+																				JOptionPane.ERROR_MESSAGE);
+																		continue; // Skip this item
+																	}
+																} catch (NumberFormatException ex) {
+																	JOptionPane.showMessageDialog(null,
+																			"Invalid quantity for item: " + currentItem,
+																			"Oops! ..", JOptionPane.ERROR_MESSAGE);
+																	continue; // Skip this item
+																}
+
+																// Insert item into CONSIST_OF table
+																try {
+																	String insertQuery = "INSERT INTO `CONSIST_OF` (It_Name, Ord_Number, Quantity) VALUES ('"
+																			+ currentItem + "', " + ordNum + ", "
+																			+ currentQty + ")";
+																	java.sql.Statement consistsStatement = con
+																			.createStatement();
+																	consistsStatement.executeUpdate(insertQuery);
+																} catch (SQLException sq2) {
+																	JOptionPane.showMessageDialog(null,
+																			"Error inserting item: " + currentItem
+																					+ " - " + sq2.getMessage(),
+																			"Item Error", JOptionPane.ERROR_MESSAGE);
+																}
+															}
+														}
+
+														// Notify the user that the order was processed
+														JOptionPane.showMessageDialog(null,
+																"Order has been successfully processed!", "Success",
+																JOptionPane.INFORMATION_MESSAGE);
+													}
+												}
+											}
+
+										});
+										itemSelectionPanel.add(new JLabel());
+										itemSelectionPanel.add(additemsButton2);
+
+										JScrollPane scrollPane = new JScrollPane(itemSelectionPanel);
+										scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+										scrollPane.setHorizontalScrollBarPolicy(
+												JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+										order2.getContentPane().add(scrollPane, BorderLayout.CENTER);
+
+										order2.setVisible(true);
+									}
+								});
+								Order.add(addItemsButton);
+
+								tabbedPane.addTab("Customer", Customer);
+								Customer.setLayout(null);
+
+								JLabel lblNewLabel_1_1 = new JLabel("Enter the new Customer info:");
+								lblNewLabel_1_1.setBounds(169, 38, 190, 16);
+								Customer.add(lblNewLabel_1_1);
+
+								JLabel lblNewLabel_2 = new JLabel("Customer Phone number:");
+								lblNewLabel_2.setBounds(87, 158, 159, 16);
+								Customer.add(lblNewLabel_2);
+
+								JTextField custNameField = new JTextField();
+								custNameField.setBounds(248, 120, 130, 26);
+								custNameField.setColumns(10);
+								Customer.add(custNameField);
+
+								JLabel emp_name_1 = new JLabel("Customer Name:");
+								emp_name_1.setBounds(141, 125, 105, 16);
+								Customer.add(emp_name_1);
+
+								JTextField custPhoneField = new JTextField();
+								custPhoneField.setBounds(248, 153, 130, 26);
+								custPhoneField.setColumns(10);
+								Customer.add(custPhoneField);
+
+								JButton btnNewButton_2 = new JButton("Add");
+								btnNewButton_2.setBounds(227, 253, 75, 40);
+								btnNewButton_2.addActionListener(new ActionListener() {// add Customer
+									public void actionPerformed(ActionEvent e) {
+										String cPhone = custPhoneField.getText();
+										String cName = custNameField.getText();
+										String numQuery = "SELECT * FROM CUSTOMER WHERE Phone_Number= '" + cPhone + "'";
+										boolean numExists = false;
+										// we need to verify uniqness and 10-char length for the number
+										try (java.sql.Statement stmt4 = con.createStatement();
+												ResultSet rs = stmt4.executeQuery(numQuery)) {
+											if (rs.next()) {
+												numExists = true;
+												JOptionPane.showMessageDialog(null, "The customer already exists",
+														"oops..", JOptionPane.ERROR_MESSAGE);
+											}
+										} catch (SQLException e4) {
+											System.out.println("Error executing SQL: " + e4.getMessage());
+										}
+										if(cPhone.length()!=10){
+											JOptionPane.showMessageDialog(null, "The number is invalid try again",
+											"oops..", JOptionPane.ERROR_MESSAGE);
+
+										}
+										if (!numExists&&cPhone.length()==10) {
+											try {
+												String insertQuery1 = "INSERT INTO `CUSTOMER` (Cust_Name, Table_Number, Phone_Number) VALUES ('"
+														+ cName + "', " + 0 + ", " + cPhone + ")";
+												java.sql.Statement custStatement = con.createStatement();
+												custStatement.executeUpdate(insertQuery1);
+												JOptionPane.showMessageDialog(null,
+														"Success! customer " + cName + " has been added"
+														,"yay", JOptionPane.INFORMATION_MESSAGE);
+											} catch (SQLException sq2) {
+												JOptionPane.showMessageDialog(null,
+														"Error inserting customer: " + cName + " - "
+																+ sq2.getMessage(),
+														"customer Error", JOptionPane.ERROR_MESSAGE);
+											}
+										}
+									}
+								});
+								Customer.add(btnNewButton_2);
+
+								cashierAdd.getContentPane().add(tabbedPane);
+
+								cashierAdd.setVisible(true);
+
 							}
 						});
 
@@ -1350,7 +1706,9 @@ public class Wister extends JFrame {
 						cashierFrame.setVisible(true);
 					}
 
-				} else {
+				} else
+
+				{
 					JOptionPane.showMessageDialog(null, "Incorrect username/password", "Oops! ..",
 							JOptionPane.ERROR_MESSAGE);
 				}
@@ -1380,7 +1738,9 @@ public class Wister extends JFrame {
 		getContentPane().add(loginButton);
 
 		JLabel blank = new JLabel("");
-		springLayout.putConstraint(SpringLayout.EAST, blank, -433, SpringLayout.EAST, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, blank, -433, SpringLayout.EAST,
+
+				getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, msg, 25, SpringLayout.EAST, blank);
 		springLayout.putConstraint(SpringLayout.NORTH, blank, 48, SpringLayout.NORTH, getContentPane());
 		ImageIcon imageIcon = new ImageIcon(
@@ -1421,9 +1781,9 @@ public class Wister extends JFrame {
 		while (resultSet.next()) {
 			model.addRow(new Object[] { resultSet.getInt("Employee_ID"), resultSet.getInt("Bcode"),
 					resultSet.getString("Emp_Name"), resultSet.getString("Residence_Number"),
-					resultSet.getString("Emp_Phone"),
-					resultSet.getString("Gender"), resultSet.getString("Role"), resultSet.getString("Neighborhood"),
-					resultSet.getString("Street"), resultSet.getString("Post_Code"), resultSet.getDouble("Salary") });
+					resultSet.getString("Emp_Phone"), resultSet.getString("Gender"), resultSet.getString("Role"),
+					resultSet.getString("Neighborhood"), resultSet.getString("Street"),
+					resultSet.getString("Post_Code"), resultSet.getDouble("Salary") });
 
 		}
 
