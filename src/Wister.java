@@ -1344,7 +1344,7 @@ public class Wister extends JFrame {
 
 								JComboBox itemType = new JComboBox();
 								itemType.setModel(
-										new DefaultComboBoxModel(new String[] { "Appetizer", "Dessert", "Main" }));
+										new DefaultComboBoxModel(new String[] { "Appetizer", "Dessert", "Main", "Drink" }));
 								itemType.setBounds(355, 113, 130, 27);
 
 								JLabel lblNewLabel_3_1_2_1 = new JLabel("Calories:");
