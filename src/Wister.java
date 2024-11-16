@@ -129,6 +129,7 @@ public class Wister extends JFrame {
 					dispose();
 					if (name.equalsIgnoreCase("managerUser")) { // if the user is a manager open manager view
 						JFrame managerFrame = new JFrame();
+						managerFrame.setTitle("WISTER MANAGER");
 						managerFrame.setBounds(450, 220, 450, 334);
 						managerFrame.setLocationRelativeTo(null);
 
@@ -1491,6 +1492,7 @@ public class Wister extends JFrame {
 						managerFrame.setVisible(true);
 					} else if (name.equalsIgnoreCase("cashierUser")) { // if the user is a cashier open cashier view
 						JFrame cashierFrame = new JFrame();
+						cashierFrame.setTitle("WISTER CASHER");
 						cashierFrame.setBounds(450, 220, 450, 334);
 
 						cashierFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
