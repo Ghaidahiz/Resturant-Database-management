@@ -14,16 +14,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class App {
     static Connection con;
     static int numOfAffectedRow;
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public static void main(String[] args) throws Exception {
         App app = new App();
         app.createConnection(); // this creates the connection with the data base
@@ -282,6 +277,7 @@ public class App {
 
     }
 
+    @SuppressWarnings("unchecked")
     public static void cashierUpdate() {
 
         // Frame
@@ -457,6 +453,7 @@ public class App {
 
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static void removeCashier() {
         JComboBox jComboBox1 = new JComboBox<>();
         String sql2 = "SELECT `Order_Number` from `ORDER`";
