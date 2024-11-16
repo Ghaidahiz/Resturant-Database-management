@@ -1109,6 +1109,18 @@ public class Wister extends JFrame {
 								hoodField.setColumns(10);
 								Employee.add(hoodField);
 
+								JLabel lblNewLabel_34= new JLabel("Shift:");
+								lblNewLabel_34.setBounds(96, 220, 94, 16);
+								Employee.add(lblNewLabel_34);
+
+								JComboBox shiftBox = new JComboBox();
+								shiftBox.setModel(
+									new DefaultComboBoxModel(new String[] { "Day", "Night", "Both"}));
+									shiftBox.setBounds(143, 215, 130, 27);
+								Employee.add(shiftBox);
+
+
+
 								JTextField PhoneField = new JTextField();
 								PhoneField.setBounds(143, 150, 130, 26);
 								PhoneField.setColumns(10);
@@ -1176,21 +1188,27 @@ public class Wister extends JFrame {
 											} else
 												gender = "Male";
 
-											// Insert the employee into the employee table
+											// Insert the employee into the EMPLOYEE table and the shift in EMP_SHIFT
 											if (validEmp) {
 												try {
-													String orderInsertQuery = "INSERT INTO `EMPLOYEE` (Employee_ID, Bcode, Emp_Name, Residence_Number, Emp_Phone, Gender, Role, Neighborhood, Street, Post_Code, Salary) "
+													String empInsertQuery = "INSERT INTO `EMPLOYEE` (Employee_ID, Bcode, Emp_Name, Residence_Number, Emp_Phone, Gender, Role, Neighborhood, Street, Post_Code, Salary) "
 															+ "VALUES (" + empNum + ", " + branchBox.getSelectedItem()
 															+ ", '" + empNameField.getText() + "', '"
 															+ ResNumField.getText() + "', '" + phoneNum + "', '"
 															+ gender + "', '" + roleBox.getSelectedItem() + "', '"
 															+ hoodField.getText() + "', '" + StreetField.getText()
 															+ "', '" + postField.getText() + "', " + salary + ")";
-													java.sql.Statement orderStatement = con.createStatement();
-													orderStatement.executeUpdate(orderInsertQuery);
+
+															String shiftInsert  = "INSERT INTO `EMP_SHIFT` (EM_ID, Shift) "
+																	+ "VALUES (" + empNum +", '" + shiftBox.getSelectedItem() + "')";
+													java.sql.Statement empStatement = con.createStatement();
+													empStatement.executeUpdate(empInsertQuery);
+													java.sql.Statement shiftStatement = con.createStatement();
+													shiftStatement.executeUpdate(shiftInsert);
 													JOptionPane.showMessageDialog(null,
 															"Employee entry has been successfully processed!",
 															"Success", JOptionPane.INFORMATION_MESSAGE);
+															
 												} catch (SQLException sq1) {
 													validEmp = false;
 													JOptionPane.showMessageDialog(null,
