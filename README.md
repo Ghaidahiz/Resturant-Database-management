@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project was developed as part of the *“Fundamentals of Database Systems” (CSC380)* course. It involves the creation, management, and interaction with a restaurant’s database using various technologies. The project encompasses hosting the database on Amazon RDS, connecting it to a Java application via JDBC, and designing a user-friendly GUI using Java Swing.
+This project was developed as part of the **“Fundamentals of Database Systems” (CSC380)** course. It involves the creation, management, and interaction with a restaurant’s database using various technologies. The project encompasses hosting the database on Amazon RDS, connecting it to a Java application via JDBC, and designing a user-friendly GUI using Java Swing.
 
 ## Features
 
@@ -20,7 +20,7 @@ This project was developed as part of the *“Fundamentals of Database Systems�
 
 ## Team Members
 
-- Ghaidaa Al-Zaidan
+- Ghaida AlZaidan
 - Almaha Alaiban
 - Eman Ameen
 - Renad Aljarallah
@@ -28,5 +28,5 @@ This project was developed as part of the *“Fundamentals of Database Systems�
 
 ## Acknowledgements
 
-Special thanks to *Prof. Sultanah Alotaibi* for her guidance throughout this project.
+Special thanks to **Prof. Sultanah Alotaibi** for her guidance throughout this project.
 
